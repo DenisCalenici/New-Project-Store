@@ -24,7 +24,7 @@
 }
 .filter_body {
   display: grid;
-  height: 2074px;
+
   grid-template-columns: 0.5fr 1.4fr;
   gap: 30px;
 }
@@ -38,7 +38,6 @@
   min-height: 400px;
   padding: 40px;
   text-align: center;
- 
 }
 
 .loading_spinner {
@@ -88,19 +87,19 @@
   max-width: 1400px;
   margin: 0 auto;
   min-height: 100vh;
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  /* background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); */
 }
 
 /* Заголовок */
 .h1 {
   font-size: 2.5rem;
   font-weight: 700;
-  color: white;
+  color: rgb(0, 0, 0);
   margin-bottom: 2rem;
   position: relative;
   display: inline-block;
-  padding-bottom: 0.5rem;
-  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+  /* padding-bottom: 0.5rem;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2); */
 }
 
 .h1::after {
@@ -110,8 +109,8 @@
   left: 0;
   width: 100%;
   height: 3px;
-  background: linear-gradient(90deg, #ff9a9e 0%, #fad0c4 100%);
-  border-radius: 3px;
+  /* background: linear-gradient(90deg, #ff9a9e 0%, #fad0c4 100%);
+  border-radius: 3px; */
 }
 
 /* Бейдж активных фильтров */
@@ -174,22 +173,22 @@
 .button::before {
   content: "";
   position: absolute;
-  top: 0;
-  left: -100%;
+  /* top: 0;
+  left: -100%; */
   width: 100%;
   height: 100%;
-  background: linear-gradient(
+  /* background: linear-gradient(
     90deg,
     transparent,
     rgba(255, 255, 255, 0.2),
     transparent
-  );
+  ); */
   transition: 0.5s;
 }
 
-.button:hover::before {
+/* .button:hover::before {
   left: 100%;
-}
+} */
 
 .filter_toggle {
   background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
@@ -197,20 +196,20 @@
   box-shadow: 0 4px 15px rgba(102, 126, 234, 0.4);
 }
 
-.filter_toggle:hover {
+/* .filter_toggle:hover {
   transform: translateY(-2px);
   box-shadow: 0 6px 20px rgba(102, 126, 234, 0.6);
-}
+} */
 
 .reset_button {
-  background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+  /* background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%); */
   color: white;
-  box-shadow: 0 4px 15px rgba(245, 87, 108, 0.4);
+  /* box-shadow: 0 4px 15px rgba(245, 87, 108, 0.4); */
 }
 
 .reset_button:hover:not(:disabled) {
   transform: translateY(-2px);
-  box-shadow: 0 6px 20px rgba(245, 87, 108, 0.6);
+  /* box-shadow: 0 6px 20px rgba(245, 87, 108, 0.6); */
 }
 
 .button_disabled {
@@ -221,8 +220,8 @@
 
 /* Бейдж сброса */
 .reset_badge {
-  background: white;
-  color: #f5576c;
+  background: rgb(16, 15, 15);
+  color: rgb(16, 15, 15);
   width: 24px;
   height: 24px;
   border-radius: 50%;
@@ -334,7 +333,7 @@
 
 /* Кнопка очистки фильтров */
 .clear_filters_button {
-  background: linear-gradient(135deg, #ff9a9e 0%, #fecfef 100%);
+  /* background: linear-gradient(135deg, #ff9a9e 0%, #fecfef 100%); */
   color: #333;
   padding: 0.5rem 1rem;
   border-radius: 10px;
@@ -441,7 +440,7 @@
 }
 
 .no_results_button {
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  /* background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); */
   color: white;
   padding: 1rem 2rem;
   font-size: 1rem;
@@ -502,7 +501,7 @@
 
 .empty_container .button {
   background: white;
-  color: #667eea;
+  /* color: #667eea; */
   margin-top: 1rem;
 }
 
@@ -652,7 +651,5 @@
 }
 img {
   max-width: 288px;
- max-height: 320;
-
-
+  max-height: 320;
 }

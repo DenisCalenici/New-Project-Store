@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import Layout from "../common/layout/Layout";
 import FilterProduct from "./filters/Filter";
-import ProductList from "./product/ProductList"; // ИСПРАВЛЕНО: Импортируем ProductList
+import ProductList from "./product/ProductList"; 
 import {
   useProductFilter,
   type IProductCard,
@@ -11,19 +11,19 @@ import s from "./Catalog.module.css";
 interface CatalogProps {
   title?: string;
   onProductClick?: (product: IProductCard) => void;
-  // Убираем products из пропсов, так как будем делать запрос сами
+ 
 }
 
 const Catalog: React.FC<CatalogProps> = ({
   title = "Накладные электронные замки",
   onProductClick,
 }) => {
-  // ИСПРАВЛЕНО: Добавляем состояние для загрузки данных
+ 
   const [products, setProducts] = useState<IProductCard[]>([]);
   const [isLoading, setIsLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
 
-  // ИСПРАВЛЕНО: Запрос данных внутри Catalog
+
   useEffect(() => {
     console.log("🔄 Catalog: Запрос данных...");
     setIsLoading(true);
@@ -47,7 +47,7 @@ const Catalog: React.FC<CatalogProps> = ({
       });
   }, []);
 
-  // ИСПРАВЛЕНО: Используем хук фильтрации с загруженными данными
+ 
   const {
     filters,
     filteredProducts,
@@ -64,7 +64,7 @@ const Catalog: React.FC<CatalogProps> = ({
 
   const [isFiltersOpen, setIsFiltersOpen] = useState(false);
 
-  // ИСПРАВЛЕНО: Состояние загрузки
+  
   if (isLoading) {
     return (
       <Layout>
@@ -76,7 +76,7 @@ const Catalog: React.FC<CatalogProps> = ({
     );
   }
 
-  // ИСПРАВЛЕНО: Состояние ошибки
+
   if (error) {
     return (
       <Layout>
@@ -91,7 +91,7 @@ const Catalog: React.FC<CatalogProps> = ({
     );
   }
 
-  // ИСПРАВЛЕНО: Состояние пустого каталога
+
   if (!products || products.length === 0) {
     return (
       <Layout>
@@ -103,17 +103,17 @@ const Catalog: React.FC<CatalogProps> = ({
     );
   }
 
-  // ИСПРАВЛЕНО: Функция добавления в корзину
+
   const addToBasket = (product: IProductCard) => {
     console.log("Товар добавлен в корзину из Catalog:", product.title);
-    // Здесь можно добавить логику добавления в корзину
+   
   };
 
   return (
     <Layout>
       <section>
         <div className={s.catalog_container}>
-          {/* Заголовок с количеством товаров */}
+
           <h1 className={s.h1}>
             {title} ({filteredProducts.length})
             {hasActiveFilters && (
@@ -123,7 +123,6 @@ const Catalog: React.FC<CatalogProps> = ({
             )}
           </h1>
 
-          {/* Панель управления */}
           <div className={s.catalog_controls}>
             <button
               className={`${s.button} ${s.filter_toggle}`}
@@ -169,7 +168,7 @@ const Catalog: React.FC<CatalogProps> = ({
           </div>
 
           <div className={s.filter_body}>
-            {/* Боковая панель фильтров */}
+       
             <div
               className={`${s.catalog_filter} ${
                 isFiltersOpen ? s.filter_open : ""
@@ -189,7 +188,7 @@ const Catalog: React.FC<CatalogProps> = ({
               />
             </div>
 
-            {/* Основная область контента */}
+          
             <div className={s.catalog_content} role="main">
               <div className={s.filter_info}>
              
@@ -204,7 +203,7 @@ const Catalog: React.FC<CatalogProps> = ({
                 )}
               </div>
 
-              {/* ИСПРАВЛЕНО: Используем ProductList вместо ручного маппинга */}
+             
               {filteredProducts.length === 0 ? (
                 <div className={s.no_results} role="alert">
                   <div className={s.no_results_icon}>🔍</div>
@@ -221,8 +220,8 @@ const Catalog: React.FC<CatalogProps> = ({
                 </div>
               ) : (
                 <div className={s.products_grid}>
-                  {/* ПЕРЕДАЕМ ProductList */}
-                  <ProductList
+            
+                  <ProductList 
                     products={filteredProducts}
                     addToBasket={addToBasket}
                     onProductClick={onProductClick}
@@ -239,5 +238,4 @@ const Catalog: React.FC<CatalogProps> = ({
 
 export default Catalog;
 
-// ИСПРАВЛЕНО: Добавляем типы
 type FilterState = ReturnType<typeof useProductFilter>["filters"];
