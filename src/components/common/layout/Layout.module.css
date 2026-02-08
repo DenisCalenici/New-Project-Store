@@ -1,0 +1,19 @@
+.link_layout {
+  text-decoration: none;
+  color: black;
+  margin: 2px;
+
+}
+
+.link_layout:active {
+  opacity: 0.5;
+}
+.li_layout {
+  list-style: none;
+  margin: 0 5px;
+  
+}
+.nav_link {
+  max-width: 1245px;
+  margin: 0 auto;
+}

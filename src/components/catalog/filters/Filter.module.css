@@ -1,0 +1,44 @@
+.filters_container {
+  margin: 0 auto;
+  max-width: 1245px;
+  height: 2074px;
+}
+.filters_body {
+  display: flex;
+  gap: 33px;
+  height: 1932px;
+}
+.filters_filter {
+  flex-basis: 25%;
+  border: 1px solid rgb(15, 15, 15);
+}
+.filters_catalog {
+  flex-basis: 70%;
+  border: 1px solid rgb(15, 15, 15);
+}
+.filters_h1 {
+  margin: 10px 0px;
+  font-weight: 600;
+  font-size: 28px;
+}
+.filters_a {
+  margin: 10px 0px;
+  font-weight: 400;
+  font-size: 16px;
+}
+.filters_body_button {
+  display: flex;
+  justify-content: space-between;
+  margin: 10px 0px;
+}
+.filters_button {
+  font-family: HelveticaNeueCyr;
+  font-weight: 400;
+  width: 288px;
+  height: 40px;
+  font-size: 16px;
+  line-height: 26px;
+  letter-spacing: 0%;
+  vertical-align: middle;
+  border: 1px solid #add7ff;
+}

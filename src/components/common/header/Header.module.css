@@ -1,0 +1,97 @@
+.header {
+  width: 100%;
+  margin: 0 auto;
+  height: 126px;
+  border-bottom: 1px solid #c3c3c3;
+}
+.stock {
+  display: flex;
+  height: 44px;
+  background-color: #454f5b;
+  font-family: SF Pro Display;
+  font-weight: 500;
+  font-size: 16px;
+  line-height: 26px;
+  letter-spacing: 12%;
+  gap: 50px;
+  color: white;
+}
+.stock_p {
+  display: flex;
+  padding: 0;
+  margin: 0;
+  place-content: end;
+  place-items: center;
+  flex-basis: 70%;
+}
+.stock_a {
+  display: flex;
+  place-content: center;
+  place-items: center;
+  flex-basis: 33%;
+  color: #fff;
+
+  
+}
+
+.logo_img {
+  margin: 20px 60px;
+}
+.logo_container {
+  font-size: 20px;
+  display:grid;
+
+  width: 100%;
+  place-items: center;
+  display: grid;
+  grid-template-columns: 0.6fr 1fr 1.1fr;
+}
+.nav_menu {
+  display: grid;
+  place-content: center;
+  place-items: center;
+  grid-template-columns: 2.5fr 0.5fr;
+}
+.nav_link {
+  place-content: start;
+  place-items: start;
+  color: #000;
+  text-decoration: none;
+}
+.nav_list {
+  display: flex;
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+.nav_item {
+  margin-right: 20px;
+}
+
+.nav_item:last-child {
+  margin-right: 0;
+}
+.container_information {
+  display: flex;
+  gap: 20px;
+  flex-basis: 25%;
+  align-items: center;
+}
+.information_icon {
+  display: flex;
+  gap: 10px;
+}
+.information_number {
+  display: flex;
+  gap: 10px;
+
+  a {
+    color: #000;
+    text-decoration: none;
+  }
+}
+
+.FaPhone {
+  display: flex;
+  place-self: center;
+}
