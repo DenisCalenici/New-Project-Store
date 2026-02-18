@@ -1,16 +1,13 @@
-import React, { useState, useEffect, useRef } from "react";
-import s from "./Main.module.css";
-import type { IProductCard } from "../../../hooks/useProductFilter";
-import Numbers from "../numbers/Numbers";
-import WhyChooseUs from "../whyChooseUs/WhyChooseUs";
-import PopularProduct from "../popularProduct/PopularProduct";
+import { useEffect, useRef, useState } from "react";
+import { IProductCard } from "../../catalog/product/ProductCard.type";
+import s from "./PopularProduct.module.css";
 
-interface MainProps {
+interface PopularProductProps {
   title?: string;
   onProductClick?: (product: IProductCard) => void;
 }
 
-const Main: React.FC<MainProps> = ({
+const PopularProduct: React.FC<PopularProductProps> = ({
   title = "Накладные электронные замки",
   onProductClick,
 }) => {
@@ -30,8 +27,14 @@ const Main: React.FC<MainProps> = ({
       })
       .then((apiData: any[]) => {
         const transformedData: IProductCard[] = apiData.map((item) => ({
-          ...item,
-          name: item.name || item.title || "",
+          id: item.id,
+          title: item.title,
+          name: item.title,
+          price: item.price,
+          description: item.description,
+          category: item.category,
+          image: item.image,
+          rating: item.rating,
         }));
         setProducts(transformedData);
         setIsLoading(false);
@@ -66,10 +69,10 @@ const Main: React.FC<MainProps> = ({
 
   if (isLoading) {
     return (
-      <div className={s.main_container}>
-        <div className={s.main_loading_container}>
-          <div className={s.main_loading_spinner}></div>
-          <p>Загрузка продуктов...</p>
+      <div className={s.popular_container}>
+        <div className={s.loadingContainer}>
+          <div className={s.loadingSpinner}></div>
+          <p>Загрузка популярных продуктов...</p>
         </div>
       </div>
     );
@@ -77,11 +80,14 @@ const Main: React.FC<MainProps> = ({
 
   if (error) {
     return (
-      <div className={s.main_container}>
-        <div className={s.main_empty_container}>
+      <div className={s.popular_container}>
+        <div className={s.emptyContainer}>
           <h2>Ошибка загрузки</h2>
           <p>{error}</p>
-          <button onClick={() => window.location.reload()} className={s.main_button}>
+          <button
+            onClick={() => window.location.reload()}
+            className={s.popular_button}
+          >
             Попробовать снова
           </button>
         </div>
@@ -89,76 +95,75 @@ const Main: React.FC<MainProps> = ({
     );
   }
 
-  if (!products || products.length === 0) {
-    return (
-      <div className={s.main_container}>
-        <div className={s.main_empty_container}>
-          <h2>Каталог пуст</h2>
-          <p>Товары временно отсутствуют</p>
-        </div>
-      </div>
-    );
-  }
-
   return (
-    <div className={s.main_container}>
-      <section className={s.main_section}>
-        <div className={s.main_catalog_container}>
-          <div className={s.main_products_wrapper}>
+    <div className={s.popular_container}>
+      <div className={s.popular_header}>
+        <h1>{title}</h1>
+      </div>
+
+      <section className={s.popular_section}>
+        <div className={s.popular_catalog_container}>
+          <div className={s.popular_products_wrapper}>
             <button
-              className={`${s.main_scroll_button} ${s.main_scroll_button_left}`}
+              className={`${s.scrollButton} ${s.scrollButtonLeft}`}
               onClick={scrollLeft}
               aria-label="Прокрутить влево"
             >
               ←
             </button>
 
-            <div className={s.main_products_scroll_container} ref={scrollContainerRef}>
-              <div className={s.main_products_grid}>
+            <div
+              className={s.popular_products_scroll_container}
+              ref={scrollContainerRef}
+            >
+              <div className={s.popular_products_grid}>
                 {products.map((product) => (
                   <div key={product.id} className={s.productCard}>
-                    <img 
-                      src={product.image} 
+                    <img
+                      src={product.image}
                       alt={product.title}
                       className={s.productImage}
                     />
-                    
+
                     <button className={s.favoriteButton}>♥</button>
-                    
+
                     <div className={s.availability}>
                       <span className={s.availabilityText}>В наличии</span>
                     </div>
-                    
+
                     <button className={s.compareButton}>Сравнить</button>
-                    
+
                     <button className={s.giftButton}>
-                      <span className={s.giftIcon}>🎁</span>
-                      В подарок
+                      <span className={s.giftIcon}>🎁</span>В подарок
                     </button>
-                    
+
                     <div className={s.productInfo}>
                       <h3 className={s.productName}>{product.title}</h3>
-                      
+
                       <div className={s.reviewsBlock}>
                         <div className={s.rating}>
                           <span className={s.stars}>★★★★★</span>
                         </div>
                         <span className={s.reviewsCount}>15 отзывов</span>
                       </div>
-                      
+
                       <div className={s.priceBlock}>
-                        <span className={s.currentPrice}>{product.price} ₽</span>
-                        <span className={s.oldPrice}>{Math.round(product.price * 1.2)} ₽</span>
+                        <span className={s.currentPrice}>
+                          {product.price} ₽
+                        </span>
+                        <span className={s.oldPrice}>
+                          {Math.round(product.price * 1.2)} ₽
+                        </span>
                       </div>
-                      
+
                       <div className={s.actionButtons}>
-                        <button 
+                        <button
                           className={s.cartButton}
                           onClick={() => addToBasket(product)}
                         >
                           В корзину
                         </button>
-                        <button 
+                        <button
                           className={s.buyButton}
                           onClick={() => onProductClick?.(product)}
                         >
@@ -172,7 +177,7 @@ const Main: React.FC<MainProps> = ({
             </div>
 
             <button
-              className={`${s.main_scroll_button} ${s.main_scroll_button_right}`}
+              className={`${s.scrollButton} ${s.scrollButtonRight}`}
               onClick={scrollRight}
               aria-label="Прокрутить вправо"
             >
@@ -181,12 +186,8 @@ const Main: React.FC<MainProps> = ({
           </div>
         </div>
       </section>
-      <section>
-        <Numbers />
-        <PopularProduct />
-      </section>
     </div>
   );
 };
 
-export default Main;
+export default PopularProduct;

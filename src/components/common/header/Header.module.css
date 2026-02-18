@@ -1,97 +1,528 @@
+/* Header.module.css */
+
 .header {
   width: 100%;
   margin: 0 auto;
   height: 126px;
   border-bottom: 1px solid #c3c3c3;
+  background: white;
+  position: relative;
+  z-index: 100;
 }
+
+/* Верхняя полоса со скидкой */
 .stock {
   display: flex;
   height: 44px;
   background-color: #454f5b;
-  font-family: SF Pro Display;
+  font-family: SF Pro Display, sans-serif;
   font-weight: 500;
   font-size: 16px;
   line-height: 26px;
   letter-spacing: 12%;
   gap: 50px;
   color: white;
+  align-items: center;
+  justify-content: center;
 }
+
 .stock_p {
   display: flex;
   padding: 0;
   margin: 0;
-  place-content: end;
-  place-items: center;
+  align-items: center;
   flex-basis: 70%;
+  white-space: nowrap;
 }
+
 .stock_a {
   display: flex;
-  place-content: center;
-  place-items: center;
+  align-items: center;
+  justify-content: center;
   flex-basis: 33%;
   color: #fff;
+  text-decoration: underline;
+  text-underline-offset: 4px;
+  transition: opacity 0.2s;
+}
 
-  
+.stock_a:hover {
+  opacity: 0.8;
+}
+
+/* Основной контейнер логотипа и меню */
+.logo_container {
+  font-size: 20px;
+  width: 100%;
+  max-width: 1245px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: 0.6fr 1fr 1.1fr;
+  align-items: center;
+  height: calc(126px - 44px); /* 82px */
+ 
 }
 
 .logo_img {
-  margin: 20px 60px;
+  margin: 0;
+  display: flex;
+  align-items: center;
 }
-.logo_container {
-  font-size: 20px;
-  display:grid;
 
-  width: 100%;
-  place-items: center;
-  display: grid;
-  grid-template-columns: 0.6fr 1fr 1.1fr;
+.logo_img img {
+  max-width: 100%;
+  height: auto;
 }
+
+/* Навигационное меню */
 .nav_menu {
-  display: grid;
-  place-content: center;
-  place-items: center;
-  grid-template-columns: 2.5fr 0.5fr;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
-.nav_link {
-  place-content: start;
-  place-items: start;
-  color: #000;
-  text-decoration: none;
-}
+
 .nav_list {
   display: flex;
   list-style: none;
   padding: 0;
   margin: 0;
-}
-.nav_item {
-  margin-right: 20px;
+  gap: 30px;
 }
 
-.nav_item:last-child {
-  margin-right: 0;
+.nav_item {
+  margin: 0;
 }
+
+.nav_link {
+  color: #000;
+  text-decoration: none;
+  font-size: 18px;
+  transition: color 0.2s;
+  white-space: nowrap;
+}
+
+.nav_link:hover {
+  color: #4295E4;
+}
+
+/* Контейнер с телефоном и иконками */
 .container_information {
   display: flex;
-  gap: 20px;
-  flex-basis: 25%;
+  gap: 30px;
+  justify-content: flex-end;
   align-items: center;
 }
-.information_icon {
-  display: flex;
-  gap: 10px;
-}
+
 .information_number {
   display: flex;
   gap: 10px;
+  align-items: center;
+  white-space: nowrap;
+}
 
-  a {
-    color: #000;
-    text-decoration: none;
-  }
+.information_number a {
+  color: #000;
+  text-decoration: none;
+  font-size: 18px;
+  transition: color 0.2s;
+}
+
+.information_number a:hover {
+  color: #4295E4;
 }
 
 .FaPhone {
   display: flex;
-  place-self: center;
+  align-items: center;
+  color: #454f5b;
+}
+
+.information_icon {
+  display: flex;
+  gap: 15px;
+  align-items: center;
+}
+
+.icon_link {
+  position: relative;
+  display: flex;
+  align-items: center;
+  color: #000;
+  transition: transform 0.2s;
+}
+
+.icon_link:hover {
+  transform: scale(1.1);
+}
+
+.cart_count {
+  position: absolute;
+  top: -8px;
+  right: -8px;
+  background-color: #ff4444;
+  color: white;
+  border-radius: 50%;
+  min-width: 18px;
+  height: 18px;
+  font-size: 11px;
+  font-weight: bold;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 2px solid white;
+}
+
+/* Бургер-меню для мобильных */
+.burger_menu {
+  display: none;
+  flex-direction: column;
+  justify-content: space-between;
+  width: 24px;
+  height: 18px;
+  cursor: pointer;
+  z-index: 200;
+  margin-right: 15px;
+}
+
+.burger_line {
+  width: 100%;
+  height: 2px;
+  background-color: #000;
+  transition: all 0.3s ease;
+}
+
+.burger_line.open:nth-child(1) {
+  transform: rotate(45deg) translate(5px, 5px);
+}
+
+.burger_line.open:nth-child(2) {
+  opacity: 0;
+}
+
+.burger_line.open:nth-child(3) {
+  transform: rotate(-45deg) translate(5px, -5px);
+}
+
+/* Мобильное меню */
+.mobile_menu {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: -100%;
+  width: 80%;
+  max-width: 400px;
+  height: 100vh;
+  background: white;
+  z-index: 150;
+  transition: left 0.3s ease;
+  padding: 100px 20px 30px;
+  overflow-y: auto;
+  box-shadow: 2px 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.mobile_menu.open {
+  left: 0;
+}
+
+.mobile_nav_list {
+  list-style: none;
+  padding: 0;
+  margin: 0 0 30px 0;
+}
+
+.mobile_nav_item {
+  margin-bottom: 20px;
+}
+
+.mobile_nav_link {
+  color: #000;
+  text-decoration: none;
+  font-size: 24px;
+  font-weight: 500;
+  display: block;
+  padding: 10px 0;
+  border-bottom: 1px solid #eaeaea;
+}
+
+.mobile_contacts {
+  margin-top: 30px;
+  padding-top: 20px;
+  border-top: 1px solid #eaeaea;
+}
+
+.mobile_phone {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 20px;
+  font-size: 20px;
+}
+
+.mobile_phone a {
+  color: #000;
+  text-decoration: none;
+}
+
+.mobile_icons {
+  display: flex;
+  gap: 20px;
+  justify-content: center;
+}
+
+/* Оверлей для затемнения фона при открытом меню */
+.menu_overlay {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5);
+  z-index: 140;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.menu_overlay.open {
+  display: block;
+  opacity: 1;
+}
+
+/* Планшеты (768px - 1024px) */
+@media (max-width: 1024px) {
+  .logo_container {
+    grid-template-columns: 0.8fr 1.2fr 1fr;
+    padding: 0 15px;
+    gap: 15px;
+  }
+
+  .nav_list {
+    gap: 15px;
+  }
+
+  .nav_link {
+    font-size: 16px;
+  }
+
+  .information_number a {
+    font-size: 16px;
+  }
+
+  .container_information {
+    gap: 15px;
+  }
+}
+
+/* Планшеты (768px - 900px) */
+@media (max-width: 900px) {
+  .stock {
+    font-size: 14px;
+    gap: 20px;
+    letter-spacing: 8%;
+  }
+
+  .stock_p {
+    flex-basis: 60%;
+  }
+
+  .stock_a {
+    flex-basis: 40%;
+  }
+
+  .logo_container {
+    grid-template-columns: 0.8fr 1.5fr 0.9fr;
+    padding: 0 10px;
+  }
+
+  .nav_list {
+    gap: 10px;
+  }
+
+  .nav_link {
+    font-size: 15px;
+  }
+
+  .information_number {
+    gap: 5px;
+  }
+
+  .information_number a {
+    font-size: 14px;
+  }
+
+  .information_icon {
+    gap: 10px;
+  }
+}
+
+/* Мобильные устройства (до 768px) */
+@media (max-width: 768px) {
+  .header {
+    height: auto;
+  }
+.logo_container img{
+  display: none;
+}
+  .stock {
+    height: 36px;
+    font-size: 12px;
+    gap: 10px;
+    padding: 0 10px;
+  }
+
+  .stock_p {
+    flex-basis: 100%;
+    white-space: normal;
+    text-align: center;
+    line-height: 1.2;
+  }
+
+  .stock_a {
+    display: none; /* Прячем ссылку на мобильных */
+  }
+
+  .logo_container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    height: 70px;
+    padding: 0 ;
+    gap: 10px;
+  }
+
+  .logo_img {
+    margin: 0;
+    flex: 0 0 auto;
+    order: 2; /* Логотип по центру */
+  }
+
+  .logo_img img {
+    max-width: 120px;
+    height: auto;
+  }
+
+  /* Бургер слева */
+  .burger_menu {
+    display: flex;
+    order: 1; /* Бургер слева */
+  }
+
+  /* Контейнер с иконками справа */
+  .container_information {
+    display: flex;
+    order: 3; /* Иконки справа */
+    gap: 12px;
+    margin: 0;
+  }
+
+  /* Прячем телефон на мобильных */
+  .information_number {
+    display: none;
+  }
+
+  /* Оставляем только иконки */
+  .information_icon {
+    display: flex;
+    gap: 12px;
+  }
+
+  .icon_link svg {
+    width: 22px;
+    height: 22px;
+  }
+
+  .cart_count {
+    min-width: 16px;
+    height: 16px;
+    font-size: 9px;
+    top: -6px;
+    right: -6px;
+  }
+
+  /* Прячем десктопное меню */
+  .nav_menu {
+    display: none;
+  }
+
+  /* Показываем мобильное меню */
+  .mobile_menu {
+    display: block;
+  }
+
+  /* Показываем оверлей */
+  .menu_overlay {
+    display: block;
+  }
+}
+
+/* Маленькие мобильные (до 480px) */
+@media (max-width: 480px) {
+  .stock {
+    height: 32px;
+    font-size: 10px;
+    padding: 0 5px;
+  }
+
+  .logo_container {
+    height: 60px;
+    
+  }
+
+  .logo_img img {
+    max-width: 100px;
+  }
+
+  .burger_menu {
+    width: 22px;
+    height: 16px;
+  }
+
+  .information_icon {
+    gap: 10px;
+  }
+
+  .icon_link svg {
+    width: 20px;
+    height: 20px;
+  }
+
+  .cart_count {
+    min-width: 14px;
+    height: 14px;
+    font-size: 8px;
+    top: -5px;
+    right: -5px;
+  }
+
+  .mobile_nav_link {
+    font-size: 20px;
+  }
+
+  .mobile_phone {
+    font-size: 18px;
+  }
+}
+
+/* Очень маленькие мобильные (до 360px) */
+@media (max-width: 360px) {
+  .logo_img img {
+    max-width: 80px;
+  }
+
+  .information_icon {
+    gap: 8px;
+  }
+
+  .icon_link svg {
+    width: 18px;
+    height: 18px;
+  }
+
+  .mobile_nav_link {
+    font-size: 18px;
+  }
+
+  .mobile_phone {
+    font-size: 16px;
+  }
 }
