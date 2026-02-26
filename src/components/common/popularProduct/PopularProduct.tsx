@@ -98,7 +98,7 @@ const PopularProduct: React.FC<PopularProductProps> = ({
   return (
     <div className={s.popular_container}>
       <div className={s.popular_header}>
-        <h1>{title}</h1>
+        <h1>Наши популярные продукты</h1>
       </div>
 
       <section className={s.popular_section}>

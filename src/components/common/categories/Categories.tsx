@@ -1,153 +1,91 @@
+import React, { useEffect, useState } from 'react';
+import s from './Categories.module.css';
 
-
-
-import { useEffect, useRef, useState } from "react";
-import { IProductCard } from "../../catalog/product/ProductCard.type";
-import ProductList from "../product/ProductList";
-import s from "./PopularProduct.module.css";
-interface CategoriesProps {
-  title?: string;
-  onProductClick?: (product: IProductCard) => void;
+interface CategoryItem {
+  id: number;
+  title: string;
+  image: string;
+  link: string;
 }
-const Categories: React.FC<CategoriesProps> = ({
-  title = "Накладные электронные замки",
-  onProductClick,
-}) => {
-  const [products, setProducts] = useState<IProductCard[]>([]);
-  const [isLoading, setIsLoading] = useState<boolean>(true);
-  coёnst [error, setError] = useState<string | null>(null);
-  const scrollContainerRef = useRef<HTMLDivElement>(null);
+
+const Categories: React.FC = () => {
+  const [categories, setCategories] = useState<CategoryItem[]>([]);
+  const [loading, setLoading] = useState(true);
+
   useEffect(() => {
-    console.log("🔄 Main: Запрос данных...");
-    setIsLoading(true);
-
-    fetch("https://fakestoreapi.com/products")
-      .then((response) => {
-        if (!response.ok) {
-          throw new Error(`Ошибка при загрузке данных: ${response.status}`);
-        }
-        return response.json();
-      })
-      .then((apiData: any[]) => {
-        console.log(`✅ Main: Получено ${apiData.length} продуктов`);
-
-        const transformedData: IProductCard[] = apiData.map((item) => ({
-          ...item,
-          name: item.name || item.title || "",
+    // Загрузка категорий с API
+    const fetchCategories = async () => {
+      try {
+        const response = await fetch('https://fakestoreapi.com/products/categories');
+        const data = await response.json();
+        
+        // Берем только 4 категории
+        const formattedCategories = data.slice(0, 4).map((cat: string, index: number) => ({
+          id: index + 1,
+          title: cat.charAt(0).toUpperCase() + cat.slice(1), // Делаем первую букву заглавной
+          image: `https://via.placeholder.com/400x225/4295E4/ffffff?text=${cat}`, // Заглушка
+          link: `/category/${cat}`
         }));
+        
+        setCategories(formattedCategories);
+      } catch (error) {
+        console.error('Ошибка загрузки категорий:', error);
+        // Заглушка при ошибке
+        setCategories([
+          { id: 1, title: 'Электроника', image: 'https://via.placeholder.com/400x225/4295E4/ffffff?text=Electronics', link: '/category/electronics' },
+          { id: 2, title: 'Одежда', image: 'https://via.placeholder.com/400x225/4295E4/ffffff?text=Clothing', link: '/category/clothing' },
+          { id: 3, title: 'Дом и сад', image: 'https://via.placeholder.com/400x225/4295E4/ffffff?text=Home', link: '/category/home' },
+          { id: 4, title: 'Спорт', image: 'https://via.placeholder.com/400x225/4295E4/ffffff?text=Sports', link: '/category/sports' }
+        ]);
+      } finally {
+        setLoading(false);
+      }
+    };
 
-        setProducts(transformedData);
-        setIsLoading(false);
-      })
-      .catch((err: any) => {
-        console.error("❌ Main: Ошибка загрузки:", err);
-        setError(err.message);
-        setIsLoading(false);
-      });
+    fetchCategories();
   }, []);
 
-  const addToBasket = (product: IProductCard) => {
-    console.log("Товар добавлен в корзину:", product.title);
-  };
-
-  const scrollLeft = () => {
-    if (scrollContainerRef.current) {
-      scrollContainerRef.current.scrollBy({
-        left: -400,
-        behavior: "smooth",
-      });
-    }
-  };
-
-  const scrollRight = () => {
-    if (scrollContainerRef.current) {
-      scrollContainerRef.current.scrollBy({
-        left: 400,
-        behavior: "smooth",
-      });
-    }
-  };
-
-  if (isLoading) {
+  if (loading) {
     return (
-      <div className={s.main_container}>
-        <div className={s.main_loading_container}>
-          <div className={s.main_loading_spinner}></div>
-          <p>Загрузка популярных продуктов...</p>
-        </div>
-      </div>
-    );
-  }
-
-  if (error) {
-    return (
-      <div className={s.main_container}>
-        <div className={s.main_empty_container}>
-          <h2>Ошибка загрузки</h2>
-          <p>{error}</p>
-          <button
-            onClick={() => window.location.reload()}
-            className={s.main_button}
-          >
-            Попробовать снова
-          </button>
-        </div>
-      </div>
-    );
-  }
-
-  if (!products || products.length === 0) {
-    return (
-      <div className={s.main_container}>
-        <div className={s.main_empty_container}>
-          <h2>Каталог пуст</h2>
-          <p>Товары временно отсутствуют</p>
-        </div>
-      </div>
-    );
-  }
-  return (
-    <div>
-      <div>
-        <h1>Наши популярные продукты</h1>
-      </div>
-      <div>
-        <section className={s.main_section}>
-          <div className={s.main_catalog_container}>
-            <div className={s.main_products_wrapper}>
-              <button
-                className={`${s.main_scroll_button} ${s.main_scroll_button_left}`}
-                onClick={scrollLeft}
-                aria-label="Прокрутить влево"
-              >
-                ←
-              </button>
-
-              <div
-                className={s.main_products_scroll_container}
-                ref={scrollContainerRef}
-              >
-                <div className={s.main_products_grid}>
-                  <ProductList
-                    products={products}
-                    addToBasket={addToBasket}
-                    onProductClick={onProductClick}
-                  />
-                </div>
-              </div>
-
-              <button
-                className={`${s.main_scroll_button} ${s.main_scroll_button_right}`}
-                onClick={scrollRight}
-                aria-label="Прокрутить вправо"
-              >
-                →
-              </button>
-            </div>
+      <div className={s.categories}>
+        <div className={s.categories_container}>
+          <div style={{ textAlign: 'center', padding: '40px' }}>
+            Загрузка категорий...
           </div>
-        </section>
+        </div>
       </div>
-    </div>
+    );
+  }
+
+  return (
+    <section className={s.categories}>
+      <div className={s.categories_container}>
+        <h1 className={s.categories_title}>Категории</h1>
+        
+        <div className={s.categories_grid}>
+          {categories.map((category) => (
+            <div key={category.id} className={s.category_card}>
+              <div className={s.category_header}>
+                <h3 className={s.category_title}>{category.title}</h3>
+                <a href={category.link} className={s.category_button}>
+                  Перейти
+                  <span className={s.category_button_arrow}>→</span>
+                </a>
+              </div>
+              
+              <div className={s.category_image_container}>
+                <img 
+                  src={category.image} 
+                  alt={category.title}
+                  className={s.category_image}
+                />
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
   );
 };
-export default Categories
+
+export default Categories;

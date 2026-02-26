@@ -15,7 +15,9 @@
   display: flex;
   height: 44px;
   background-color: #454f5b;
-  font-family: SF Pro Display, sans-serif;
+  font-family:
+    SF Pro Display,
+    sans-serif;
   font-weight: 500;
   font-size: 16px;
   line-height: 26px;
@@ -30,6 +32,7 @@
   display: flex;
   padding: 0;
   margin: 0;
+  justify-content: end;
   align-items: center;
   flex-basis: 70%;
   white-space: nowrap;
@@ -60,7 +63,6 @@
   grid-template-columns: 0.6fr 1fr 1.1fr;
   align-items: center;
   height: calc(126px - 44px); /* 82px */
- 
 }
 
 .logo_img {
@@ -102,7 +104,7 @@
 }
 
 .nav_link:hover {
-  color: #4295E4;
+  color: #4295e4;
 }
 
 /* Контейнер с телефоном и иконками */
@@ -128,7 +130,7 @@
 }
 
 .information_number a:hover {
-  color: #4295E4;
+  color: #4295e4;
 }
 
 .FaPhone {
@@ -360,9 +362,9 @@
   .header {
     height: auto;
   }
-.logo_container img{
-  display: none;
-}
+  .logo_container img {
+    display: none;
+  }
   .stock {
     height: 36px;
     font-size: 12px;
@@ -373,6 +375,7 @@
   .stock_p {
     flex-basis: 100%;
     white-space: normal;
+
     text-align: center;
     line-height: 1.2;
   }
@@ -386,7 +389,7 @@
     justify-content: space-between;
     align-items: center;
     height: 70px;
-    padding: 0 ;
+    padding: 0;
     gap: 10px;
   }
 
@@ -465,7 +468,6 @@
 
   .logo_container {
     height: 60px;
-    
   }
 
   .logo_img img {

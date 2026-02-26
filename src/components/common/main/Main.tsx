@@ -4,6 +4,7 @@ import type { IProductCard } from "../../../hooks/useProductFilter";
 import Numbers from "../numbers/Numbers";
 import WhyChooseUs from "../whyChooseUs/WhyChooseUs";
 import PopularProduct from "../popularProduct/PopularProduct";
+import Categories from "../categories";
 
 interface MainProps {
   title?: string;
@@ -17,7 +18,7 @@ const Main: React.FC<MainProps> = ({
   const [products, setProducts] = useState<IProductCard[]>([]);
   const [isLoading, setIsLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
-  const scrollContainerRef = useRef<HTMLDivElement>(null);
+  const [currentIndex, setCurrentIndex] = useState<number>(0);
 
   useEffect(() => {
     setIsLoading(true);
@@ -46,22 +47,12 @@ const Main: React.FC<MainProps> = ({
     console.log("Товар добавлен в корзину:", product.title);
   };
 
-  const scrollLeft = () => {
-    if (scrollContainerRef.current) {
-      scrollContainerRef.current.scrollBy({
-        left: -400,
-        behavior: "smooth",
-      });
-    }
+  const showPrevious = () => {
+    setCurrentIndex((prev) => (prev > 0 ? prev - 1 : products.length - 1));
   };
 
-  const scrollRight = () => {
-    if (scrollContainerRef.current) {
-      scrollContainerRef.current.scrollBy({
-        left: 400,
-        behavior: "smooth",
-      });
-    }
+  const showNext = () => {
+    setCurrentIndex((prev) => (prev < products.length - 1 ? prev + 1 : 0));
   };
 
   if (isLoading) {
@@ -81,7 +72,10 @@ const Main: React.FC<MainProps> = ({
         <div className={s.main_empty_container}>
           <h2>Ошибка загрузки</h2>
           <p>{error}</p>
-          <button onClick={() => window.location.reload()} className={s.main_button}>
+          <button
+            onClick={() => window.location.reload()}
+            className={s.main_button}
+          >
             Попробовать снова
           </button>
         </div>
@@ -100,89 +94,79 @@ const Main: React.FC<MainProps> = ({
     );
   }
 
+  const currentProduct = products[currentIndex];
+
   return (
     <div className={s.main_container}>
       <section className={s.main_section}>
         <div className={s.main_catalog_container}>
-          <div className={s.main_products_wrapper}>
+          {/* Центрированная карточка товара */}
+          <div className={s.productCenterWrapper}>
             <button
-              className={`${s.main_scroll_button} ${s.main_scroll_button_left}`}
-              onClick={scrollLeft}
-              aria-label="Прокрутить влево"
+              className={`${s.nav_button} ${s.nav_button_prev}`}
+              onClick={showPrevious}
+              aria-label="Предыдущий товар"
             >
               ←
             </button>
 
-            <div className={s.main_products_scroll_container} ref={scrollContainerRef}>
-              <div className={s.main_products_grid}>
-                {products.map((product) => (
-                  <div key={product.id} className={s.productCard}>
-                    <img 
-                      src={product.image} 
-                      alt={product.title}
-                      className={s.productImage}
-                    />
-                    
-                    <button className={s.favoriteButton}>♥</button>
-                    
-                    <div className={s.availability}>
-                      <span className={s.availabilityText}>В наличии</span>
-                    </div>
-                    
-                    <button className={s.compareButton}>Сравнить</button>
-                    
-                    <button className={s.giftButton}>
-                      <span className={s.giftIcon}>🎁</span>
-                      В подарок
-                    </button>
-                    
-                    <div className={s.productInfo}>
-                      <h3 className={s.productName}>{product.title}</h3>
-                      
-                      <div className={s.reviewsBlock}>
-                        <div className={s.rating}>
-                          <span className={s.stars}>★★★★★</span>
-                        </div>
-                        <span className={s.reviewsCount}>15 отзывов</span>
-                      </div>
-                      
-                      <div className={s.priceBlock}>
-                        <span className={s.currentPrice}>{product.price} ₽</span>
-                        <span className={s.oldPrice}>{Math.round(product.price * 1.2)} ₽</span>
-                      </div>
-                      
-                      <div className={s.actionButtons}>
-                        <button 
-                          className={s.cartButton}
-                          onClick={() => addToBasket(product)}
-                        >
-                          В корзину
-                        </button>
-                        <button 
-                          className={s.buyButton}
-                          onClick={() => onProductClick?.(product)}
-                        >
-                          Купить
-                        </button>
-                      </div>
-                    </div>
-                  </div>
-                ))}
+            <div className={s.productCard}>
+              {/* Левая часть - изображение */}
+              <div className={s.productImageLeft}>
+                <img
+                  src={currentProduct.image}
+                  alt={currentProduct.title}
+                  className={s.productImage}
+                />
+              </div>
+
+              {/* Правая часть - информация */}
+              <div className={s.productInfoRight}>
+                <h3 className={s.productName}>{currentProduct.title}</h3>
+                
+                <p className={s.productDescription}>
+                  {currentProduct.description 
+                    ? `${currentProduct.description.substring(0, 150)}...` 
+                    : 'Описание товара временно отсутствует'}
+                </p>
+                
+                <div className={s.priceBlock}>
+                  <span className={s.currentPrice}>
+                    {currentProduct.price} ₽
+                  </span>
+                  <span className={s.oldPrice}>
+                    {Math.round(currentProduct.price * 1.2)} ₽
+                  </span>
+                </div>
+                
+                <button
+                  className={s.addToCartButton}
+                  onClick={() => addToBasket(currentProduct)}
+                >
+                  Добавить в корзину
+                </button>
               </div>
             </div>
 
             <button
-              className={`${s.main_scroll_button} ${s.main_scroll_button_right}`}
-              onClick={scrollRight}
-              aria-label="Прокрутить вправо"
+              className={`${s.nav_button} ${s.nav_button_next}`}
+              onClick={showNext}
+              aria-label="Следующий товар"
             >
               →
             </button>
+          </div>
+
+          {/* Индикатор текущего товара */}
+          <div className={s.productCounter}>
+            {currentIndex + 1} / {products.length}
           </div>
         </div>
       </section>
       <section>
         <Numbers />
+        <WhyChooseUs />
+        <Categories />
         <PopularProduct />
       </section>
     </div>
