@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 import { fetchProductById } from "../../../api/product";
 import type { IProductCard } from "../../catalog/product/ProductCard.type";
 import Layout from "../layout/Layout";
-import s from "./Product.module.css";
+import s from ".//ProductPage.module.css";
 import { useCartActions } from "../../../hooks/useCartAction";
 
 const ProductPage = () => {
@@ -48,8 +48,6 @@ const ProductPage = () => {
     };
     loadProduct();
   }, [id]);
-
-
 
   if (error) {
     return (

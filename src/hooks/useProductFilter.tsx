@@ -1,11 +1,24 @@
 // hooks/useProductFilter.tsx
 import { useState, useMemo, useCallback } from "react";
 
-// ИСПРАВЛЕНО: Создаем тип продукта, который совпадает с твоим IProductCard
+// ✅ ИСПРАВЛЕНО: Определяем интерфейс прямо здесь
+export interface IProductCard {
+  id: number;
+  title: string;
+  description: string;
+  price: number;
+  category: string;
+  image: string;
+  rating: {
+    rate: number;
+    count: number;
+  };
+  inStock?: boolean;
+  discount?: number;
+  brand?: string;
+}
 
-import { IProductCard } from "../components/catalog/product/ProductCard.type";
-
-// ИСПРАВЛЕНО: Экспортируем тип состояния фильтров
+// Экспортируем тип состояния фильтров
 export interface FilterState {
   category: string;
   priceRange: [number, number];
@@ -13,7 +26,7 @@ export interface FilterState {
   sortBy: "popularity" | "price-low" | "price-high" | "rating";
 }
 
-// ИСПРАВЛЕНО: Добавляем интерфейс возвращаемого значения
+// Интерфейс возвращаемого значения
 export interface UseProductFilterReturn {
   filters: FilterState;
   filteredProducts: IProductCard[];
@@ -31,10 +44,10 @@ export interface UseProductFilterReturn {
 export const useProductFilter = (
   products?: IProductCard[]
 ): UseProductFilterReturn => {
-  // ИСПРАВЛЕНО: Защита от undefined - всегда работаем с массивом
+  // Защита от undefined - всегда работаем с массивом
   const safeProducts: IProductCard[] = products || [];
 
-  // ИСПРАВЛЕНО: Логируем для отладки
+  // Логируем для отладки
   console.log("useProductFilter получил:", {
     total: safeProducts.length,
     firstProduct: safeProducts[0],
@@ -48,7 +61,7 @@ export const useProductFilter = (
     sortBy: "popularity",
   });
 
-  // ИСПРАВЛЕНО: Получаем категории с защитой от отсутствия данных
+  // Получаем категории с защитой от отсутствия данных
   const categories = useMemo(() => {
     if (!safeProducts || safeProducts.length === 0) {
       console.warn("Нет продуктов для получения категорий");
@@ -56,7 +69,7 @@ export const useProductFilter = (
     }
 
     try {
-      // ИСПРАВЛЕНО: Фильтруем продукты без категории
+      // Фильтруем продукты без категории
       const productsWithCategory = safeProducts.filter(
         (p) => p && p.category !== undefined && p.category !== null
       );
@@ -78,7 +91,7 @@ export const useProductFilter = (
     }
   }, [safeProducts]);
 
-  // ИСПРАВЛЕНО: Фильтрация с полной проверкой всех полей
+  // Фильтрация с полной проверкой всех полей
   const filteredProducts = useMemo(() => {
     if (!safeProducts || safeProducts.length === 0) {
       console.warn("Нет продуктов для фильтрации");
@@ -87,13 +100,13 @@ export const useProductFilter = (
 
     try {
       let filtered = safeProducts.filter((product) => {
-        // ИСПРАВЛЕНО: Проверяем, что продукт существует
+        // Проверяем, что продукт существует
         if (!product) {
           console.warn("Найден undefined продукт в массиве");
           return false;
         }
 
-        // ИСПРАВЛЕНО: Проверяем обязательные поля
+        // Проверяем обязательные поля
         const hasRequiredFields =
           product.id !== undefined &&
           product.title !== undefined &&
@@ -138,7 +151,7 @@ export const useProductFilter = (
 
       console.log(`После фильтрации: ${filtered.length} из ${safeProducts.length}`);
 
-      // ИСПРАВЛЕНО: Сортировка с защитой от отсутствия рейтинга
+      // Сортировка с защитой от отсутствия рейтинга
       switch (filters.sortBy) {
         case "price-low":
           filtered.sort((a, b) => (a.price || 0) - (b.price || 0));
@@ -168,7 +181,7 @@ export const useProductFilter = (
     }
   }, [safeProducts, filters]);
 
-  // ИСПРАВЛЕНО: Добавляем полезные вычисляемые значения
+  // Добавляем полезные вычисляемые значения
   const totalProducts = safeProducts.length;
   
   const activeFiltersCount = useMemo(() => {
@@ -181,7 +194,7 @@ export const useProductFilter = (
 
   const hasActiveFilters = activeFiltersCount > 0;
 
-  // ИСПРАВЛЕНО: Обертываем функции в useCallback для оптимизации
+  // Обертываем функции в useCallback для оптимизации
   const updateCategory = useCallback((category: string) => {
     console.log("Изменение категории на:", category);
     setFilters((prev) => ({ ...prev, category }));
@@ -212,7 +225,7 @@ export const useProductFilter = (
     });
   }, []);
 
-  // ИСПРАВЛЕНО: Возвращаем полный объект с данными
+  // Возвращаем полный объект с данными
   return {
     filters,
     filteredProducts,
@@ -227,8 +240,3 @@ export const useProductFilter = (
     hasActiveFilters,
   };
 };
-
-
-
-export type { IProductCard };
-

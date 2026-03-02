@@ -2,14 +2,13 @@
 
 .main_container {
   width: 1440px;
-  /* height: 774px; */
-  /* margin: 0 auto;
+
+  margin: 0 auto;
   font-family:
     SF Pro Text,
     sans-serif;
   position: relative;
-  top: 126px;
-  opacity: 1; */
+
 }
 
 .main_section {

@@ -157,7 +157,7 @@ const Main: React.FC<MainProps> = ({
             </button>
           </div>
 
-          {/* Индикатор текущего товара */}
+       
           <div className={s.productCounter}>
             {currentIndex + 1} / {products.length}
           </div>

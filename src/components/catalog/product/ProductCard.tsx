@@ -1,24 +1,28 @@
-// components/catalog/productCard/ProductCard.tsx
 import s from "./productCard.module.css";
 import { Link } from "react-router-dom";
-import hihi from "../../../../public/image/Logo.png"; // Fallback изображение
+import hihi from "../../../../public/image/Logo.png";
 import { useCartActions } from "../../../hooks/useCartAction";
 import { useState } from "react";
-// ИСПРАВЛЕНО: Импортируем тип из хука
-import type { IProductCard } from "../../../hooks/useProductFilter";
-
+import { IProductCard } from "../../../hooks/useProductFilter";
 interface ProductProps {
   product: IProductCard;
   onProductClick?: (product: IProductCard) => void;
+  onAddToBasket?: (product: IProductCard) => void; // ✅ Добавлен пропс для добавления в корзину
 }
 
-const ProductCard = ({ product, onProductClick }: ProductProps) => {
+const ProductCard = ({
+  product,
+  onProductClick,
+  onAddToBasket,
+}: ProductProps) => {
   const { handleAddToBasket } = useCartActions();
   const [isExpanded, setIsExpanded] = useState(false);
   const [imageError, setImageError] = useState(false);
 
-  // ИСПРАВЛЕНО: Детальная валидация продукта
-  const validateProduct = (product: IProductCard): {
+  // Валидация продукта
+  const validateProduct = (
+    product: IProductCard,
+  ): {
     isValid: boolean;
     errors: string[];
   } => {
@@ -29,7 +33,6 @@ const ProductCard = ({ product, onProductClick }: ProductProps) => {
       return { isValid: false, errors };
     }
 
-    // Проверяем обязательные поля
     if (!product.id && product.id !== 0) {
       errors.push("Отсутствует id продукта");
     }
@@ -48,7 +51,6 @@ const ProductCard = ({ product, onProductClick }: ProductProps) => {
       errors.push("Отсутствует категория продукта");
     }
 
-    // Проверяем опциональные поля с значениями по умолчанию
     if (!product.image?.trim()) {
       console.warn("Продукт без изображения:", product.id);
     }
@@ -69,7 +71,6 @@ const ProductCard = ({ product, onProductClick }: ProductProps) => {
     return { isValid, errors };
   };
 
-  // ИСПРАВЛЕНО: Выполняем валидацию
   const validation = validateProduct(product);
 
   if (!validation.isValid) {
@@ -82,15 +83,16 @@ const ProductCard = ({ product, onProductClick }: ProductProps) => {
     );
   }
 
-  // ИСПРАВЛЕНО: Безопасное извлечение данных с fallback значениями
+  // Безопасное извлечение данных с fallback значениями
   const productId = String(product.id);
   const productTitle = product.title?.trim() || "Без названия";
   const productDescription = product.description?.trim() || "";
   const productPrice = product.price || 0;
   const productCategory = product.category?.trim() || "uncategorized";
-  const productImage = !imageError && product.image?.trim() ? product.image : hihi;
+  const productImage =
+    !imageError && product.image?.trim() ? product.image : hihi;
   const productRating = product.rating || { rate: 0, count: 0 };
-  const isAvailable = product.inStock !== false; // По умолчанию в наличии
+  const isAvailable = product.inStock !== false;
   const hasDiscount = product.discount && product.discount > 0;
   const discountedPrice = hasDiscount
     ? productPrice * (1 - (product.discount || 0) / 100)
@@ -106,7 +108,13 @@ const ProductCard = ({ product, onProductClick }: ProductProps) => {
     e.stopPropagation();
     e.preventDefault();
     console.log("Добавление в корзину:", productTitle);
-    handleAddToBasket(e, product);
+
+    // ✅ Используем пропс onAddToBasket если он передан, иначе используем handleAddToBasket из хука
+    if (onAddToBasket) {
+      onAddToBasket(product);
+    } else {
+      handleAddToBasket(e, product);
+    }
   };
 
   const handleTitleClick = (e: React.MouseEvent) => {
@@ -143,15 +151,15 @@ const ProductCard = ({ product, onProductClick }: ProductProps) => {
               ♡
             </button>
 
-            {/* Кнопка скидки/добавления в корзину */}
+            {/* ✅ ИСПРАВЛЕНО: Кнопка "SALE" для добавления в корзину */}
             <button
               onClick={handleAddToBasketClick}
               className={`${s.filter_castle_button_2} ${
                 hasDiscount ? s.has_discount : ""
               }`}
-              aria-label={hasDiscount ? "Товар со скидкой" : "Добавить в корзину"}
+              aria-label="Добавить в корзину"
             >
-              {hasDiscount ? `-${product.discount}%` : "SALE"}
+              SALE
             </button>
 
             {/* Статус наличия */}
@@ -195,9 +203,7 @@ const ProductCard = ({ product, onProductClick }: ProductProps) => {
           title={isExpanded ? "Скрыть описание" : "Показать описание"}
         >
           {productTitle}
-          <span className={s.expand_icon}>
-            {isExpanded ? "▲" : "▼"}
-          </span>
+          <span className={s.expand_icon}>{isExpanded ? "▲" : "▼"}</span>
         </h2>
 
         {/* Описание товара (показывается при развертывании) */}
@@ -207,7 +213,10 @@ const ProductCard = ({ product, onProductClick }: ProductProps) => {
 
         {/* Рейтинг товара */}
         <div className={s.rating_container}>
-          <div className={s.rating_stars} aria-label={`Рейтинг: ${productRating.rate} из 5`}>
+          <div
+            className={s.rating_stars}
+            aria-label={`Рейтинг: ${productRating.rate} из 5`}
+          >
             {"★".repeat(Math.round(productRating.rate))}
             {"☆".repeat(5 - Math.round(productRating.rate))}
           </div>
@@ -221,7 +230,9 @@ const ProductCard = ({ product, onProductClick }: ProductProps) => {
           <p className={s.price_current_price}>
             {hasDiscount ? (
               <>
-                <span className={s.original_price}>${productPrice.toFixed(2)}</span>
+                <span className={s.original_price}>
+                  ${productPrice.toFixed(2)}
+                </span>
                 <span className={s.discounted_price}>
                   ${discountedPrice.toFixed(2)}
                 </span>

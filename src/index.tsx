@@ -1,7 +1,7 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-import Product from "./components/common/product/Product";
+import ProductPage from "./components/common/product/ProductPage";
 import CheckoutForm from "./components/common/checkout/CheckoutForm";
 import Home from "./pages/home";
 import App from "./App";
@@ -22,7 +22,7 @@ root.render(
       <CartProvider>
         <Routes>
           <Route path="/" element={<App />} />
-          <Route path="product" element={<Product />} />
+          <Route path="product" element={<ProductPage />} />
           <Route path="/catalog" element={<Catalog />} />
           <Route path="/about" element={<About />} />
           <Route path="/wholesale" element={<Wholesale />} />

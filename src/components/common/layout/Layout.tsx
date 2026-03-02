@@ -3,9 +3,7 @@ import Header from "../header/Header";
 import Footer from "../footer/Footer";
 import { Link } from "react-router-dom";
 import s from "./Layout.module.css";
-import WhyChooseUs from "../whyChooseUs/WhyChooseUs";
 import RequestCall from "../requestCall/RequestCall";
-import PopularProduct from "../popularProduct/PopularProduct";
 interface LayoutProps {
   title?: string;
   children: React.ReactNode;
@@ -32,9 +30,7 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
       </nav>
 
       <main className="main-content">{children}</main>
-      {/* <WhyChooseUs /> */}
-
-      {/* <PopularProduct /> */}
+   
       <RequestCall />
       <Footer />
     </div>

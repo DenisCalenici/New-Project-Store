@@ -1,28 +1,88 @@
 import React, { useState, useEffect } from "react";
 import Layout from "../common/layout/Layout";
 import FilterProduct from "./filters/Filter";
-import ProductList from "./product/ProductList"; 
+import ProductList from "./product/ProductList";
+import Basket from "../common/basket/Basket";
+import s from "./Catalog.module.css";
+import Ceo from "../common/ceo/Ceo";
+import PopularProduct from "../common/popularProduct/PopularProduct";
 import {
   useProductFilter,
   type IProductCard,
 } from "../../hooks/useProductFilter";
-import s from "./Catalog.module.css";
+import { Link } from "react-router-dom";
+
+interface BasketItem {
+  id: number;
+  name: string;
+  price: number;
+  quantity: number;
+  image: string;
+}
 
 interface CatalogProps {
   title?: string;
   onProductClick?: (product: IProductCard) => void;
- 
 }
+
+type FilterState = ReturnType<typeof useProductFilter>["filters"];
 
 const Catalog: React.FC<CatalogProps> = ({
   title = "Накладные электронные замки",
   onProductClick,
 }) => {
- 
   const [products, setProducts] = useState<IProductCard[]>([]);
   const [isLoading, setIsLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
+  const [currentPage, setCurrentPage] = useState<number>(1);
+  const productsPerPage = 4;
 
+  const [isBasketOpen, setIsBasketOpen] = useState(false);
+  const [basketItems, setBasketItems] = useState<BasketItem[]>([]);
+
+  const openBasket = () => setIsBasketOpen(true);
+  const closeBasket = () => setIsBasketOpen(false);
+
+  const addToBasket = (product: IProductCard) => {
+    setBasketItems((prevItems: BasketItem[]) => {
+      const existingItem = prevItems.find(item => item.id === product.id);
+      
+      if (existingItem) {
+        return prevItems.map(item =>
+          item.id === product.id
+            ? { ...item, quantity: item.quantity + 1 }
+            : item
+        );
+      } else {
+        const newItem: BasketItem = {
+          id: product.id,
+          name: product.title,
+          price: product.price,
+          quantity: 1,
+          image: product.image
+        };
+        return [...prevItems, newItem];
+      }
+    });
+    
+    console.log("✅ Товар добавлен в корзину:", product.title);
+  };
+
+  const updateQuantity = (id: number, quantity: number) => {
+    setBasketItems((prevItems: BasketItem[]) =>
+      prevItems.map(item =>
+        item.id === id ? { ...item, quantity } : item
+      )
+    );
+  };
+
+  const removeItem = (id: number) => {
+    setBasketItems((prevItems: BasketItem[]) => 
+      prevItems.filter(item => item.id !== id)
+    );
+  };
+
+  const totalBasketItems = basketItems.reduce((sum, item) => sum + item.quantity, 0);
 
   useEffect(() => {
     console.log("🔄 Catalog: Запрос данных...");
@@ -47,7 +107,6 @@ const Catalog: React.FC<CatalogProps> = ({
       });
   }, []);
 
- 
   const {
     filters,
     filteredProducts,
@@ -57,14 +116,33 @@ const Catalog: React.FC<CatalogProps> = ({
     updateSearchQuery,
     updateSortBy,
     resetFilters,
-    totalProducts,
     activeFiltersCount,
     hasActiveFilters,
   } = useProductFilter(products);
 
   const [isFiltersOpen, setIsFiltersOpen] = useState(false);
 
-  
+  const totalPages = Math.ceil(filteredProducts.length / productsPerPage);
+  const indexOfLastProduct = currentPage * productsPerPage;
+  const indexOfFirstProduct = indexOfLastProduct - productsPerPage;
+  const currentProducts = filteredProducts.slice(indexOfFirstProduct, indexOfLastProduct);
+
+  const goToPreviousPage = () => {
+    setCurrentPage(prev => Math.max(prev - 1, 1));
+  };
+
+  const goToNextPage = () => {
+    setCurrentPage(prev => Math.min(prev + 1, totalPages));
+  };
+
+  const goToPage = (pageNumber: number) => {
+    setCurrentPage(pageNumber);
+  };
+
+  useEffect(() => {
+    setCurrentPage(1);
+  }, [filteredProducts.length]);
+
   if (isLoading) {
     return (
       <Layout>
@@ -75,7 +153,6 @@ const Catalog: React.FC<CatalogProps> = ({
       </Layout>
     );
   }
-
 
   if (error) {
     return (
@@ -91,7 +168,6 @@ const Catalog: React.FC<CatalogProps> = ({
     );
   }
 
-
   if (!products || products.length === 0) {
     return (
       <Layout>
@@ -103,35 +179,17 @@ const Catalog: React.FC<CatalogProps> = ({
     );
   }
 
-
-  const addToBasket = (product: IProductCard) => {
-    console.log("Товар добавлен в корзину из Catalog:", product.title);
-   
-  };
-
   return (
     <Layout>
       <section>
         <div className={s.catalog_container}>
-
-          <h1 className={s.h1}>
-            {title} ({filteredProducts.length})
-            {hasActiveFilters && (
-              <span className={s.active_filters_badge}>
-                Активных фильтров: {activeFiltersCount}
-              </span>
-            )}
-          </h1>
+          <div className={s.catalog_header}>
+            <h1 className={s.h1}>
+              {title} ({filteredProducts.length})
+            </h1>
+          </div>
 
           <div className={s.catalog_controls}>
-            <button
-              className={`${s.button} ${s.filter_toggle}`}
-              onClick={() => setIsFiltersOpen(!isFiltersOpen)}
-              aria-expanded={isFiltersOpen}
-            >
-              {isFiltersOpen ? "✕ Скрыть фильтры" : "☰ Показать фильтры"}
-            </button>
-
             <button
               className={`${s.button} ${s.reset_button} ${
                 !hasActiveFilters ? s.button_disabled : ""
@@ -142,14 +200,15 @@ const Catalog: React.FC<CatalogProps> = ({
             >
               Сбросить фильтры
               {hasActiveFilters && (
-                <span className={s.reset_badge}>{activeFiltersCount}</span>
+                <span className={s.reset_badge}></span>
               )}
             </button>
-
+            {hasActiveFilters && (
+              <span className={s.active_filters_badge}>
+                Активных фильтров: {activeFiltersCount}
+              </span>
+            )}
             <div className={s.sort_container}>
-              <label htmlFor="sort-select" className={s.sort_label}>
-                Сортировка:
-              </label>
               <select
                 id="sort-select"
                 value={filters.sortBy}
@@ -168,7 +227,6 @@ const Catalog: React.FC<CatalogProps> = ({
           </div>
 
           <div className={s.filter_body}>
-       
             <div
               className={`${s.catalog_filter} ${
                 isFiltersOpen ? s.filter_open : ""
@@ -188,10 +246,8 @@ const Catalog: React.FC<CatalogProps> = ({
               />
             </div>
 
-          
             <div className={s.catalog_content} role="main">
               <div className={s.filter_info}>
-             
                 {hasActiveFilters && (
                   <button
                     onClick={resetFilters}
@@ -203,8 +259,7 @@ const Catalog: React.FC<CatalogProps> = ({
                 )}
               </div>
 
-             
-              {filteredProducts.length === 0 ? (
+              {currentProducts.length === 0 ? (
                 <div className={s.no_results} role="alert">
                   <div className={s.no_results_icon}>🔍</div>
                   <h3 className={s.no_results_title}>Товары не найдены</h3>
@@ -219,23 +274,70 @@ const Catalog: React.FC<CatalogProps> = ({
                   </button>
                 </div>
               ) : (
-                <div className={s.products_grid}>
-            
-                  <ProductList 
-                    products={filteredProducts}
-                    addToBasket={addToBasket}
-                    onProductClick={onProductClick}
-                  />
-                </div>
+                <>
+                  <div className={s.products_grid}>
+                    {/* <Link  to={`/product/${productId}`}></Link> */}
+                    <ProductList 
+                      products={currentProducts}
+                      addToBasket={addToBasket}
+                      onProductClick={onProductClick}
+                    />
+                  </div>
+
+                  {totalPages > 1 && (
+                    <div className={s.pagination}>
+                      <button
+                        onClick={goToPreviousPage}
+                        disabled={currentPage === 1}
+                        className={s.pagination_arrow}
+                        aria-label="Предыдущая страница"
+                      >
+                        ←
+                      </button>
+
+                      {Array.from({ length: totalPages }, (_, i) => i + 1).map((number) => (
+                        <button
+                          key={number}
+                          onClick={() => goToPage(number)}
+                          className={`${s.pagination_number} ${
+                            currentPage === number ? s.pagination_active : ""
+                          }`}
+                          aria-label={`Страница ${number}`}
+                          aria-current={currentPage === number ? "page" : undefined}
+                        >
+                          {number}
+                        </button>
+                      ))}
+
+                      <button
+                        onClick={goToNextPage}
+                        disabled={currentPage === totalPages}
+                        className={s.pagination_arrow}
+                        aria-label="Следующая страница"
+                      >
+                        →
+                      </button>
+                    </div>
+                  )}
+                </>
               )}
             </div>
           </div>
         </div>
       </section>
+      
+      <PopularProduct />
+      <Ceo/>
+
+      <Basket
+        isOpen={isBasketOpen}
+        onClose={closeBasket}
+        items={basketItems}
+        onUpdateQuantity={updateQuantity}
+        onRemoveItem={removeItem}
+      />
     </Layout>
   );
 };
 
 export default Catalog;
-
-type FilterState = ReturnType<typeof useProductFilter>["filters"];

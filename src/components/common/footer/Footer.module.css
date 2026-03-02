@@ -272,6 +272,7 @@
   }
 
   .footer_logo {
+
     margin-bottom: 30px;
   }
 
@@ -374,7 +375,7 @@
   }
 }
 
-/* Минимальное уменьшение (360px) */
+
 @media (max-width: 360px) {
   .footer_container {
     padding: 20px 10px;
@@ -389,7 +390,7 @@
     height: 20px;
   }
 
-  /* Все еще 2 колонки */
+  
   .footer_information_1,
   .footer_information_2,
   .footer_information_3,
@@ -422,3 +423,11 @@
     padding: 12px;
   }
 }
+/* @media (max-width: 375px) {
+  
+
+ 
+  .footer_logo {
+    width: 330px;
+    
+  }} */

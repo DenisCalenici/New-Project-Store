@@ -1,20 +1,25 @@
-import { ReactNode } from "react";
+import { IProductCard } from "../../../hooks/useProductFilter";
 
-export interface IProductCard {
-  name: ReactNode;
+export type { IProductCard };
+// export interface IProductCard {
+//   id: number;
+//   title: string;        // Название товара (должно быть одно поле)
+//   description: string;
+//   price: number;
+//   category: string;
+//   image: string;
+//   rating: {
+//     rate: number;
+//     count: number;
+//   };
+//   inStock?: boolean;
+//   discount?: number;
+//   brand?: string;
+//}
+export interface BasketItem {
   id: number;
-  title: string; 
-  description: string;
+  name: string;  // Здесь name - это название товара для корзины
   price: number;
-  category: string;
+  quantity: number;
   image: string;
-  rating: {
-    rate: number;
-    count: number;
-  };
-  // Дополнительные поля
-  inStock?: boolean;
-  discount?: number;
-  brand?: string;
-
 }

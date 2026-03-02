@@ -1,0 +1,271 @@
+.productCard {
+  width: 100%;
+  max-width: 290px;
+  background: #ffffff;
+  border: 1px solid #eaeaea;
+  position: relative;
+  padding: 0;
+  margin: 0 auto;
+  box-sizing: border-box;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.productCard:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
+}
+
+.productImage {
+  width: 100%;
+  height: 220px;
+  object-fit: contain;
+  background: #f8f8f8;
+  display: block;
+  cursor: pointer;
+}
+
+.favoriteButton {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  width: 22px;
+  height: 22px;
+  background: white;
+  border: 1px solid #eaeaea;
+  border-radius: 50%;
+  cursor: pointer;
+  z-index: 10;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 13px;
+}
+
+.availability {
+  position: absolute;
+  top: 12px;
+  left: 40px;
+  z-index: 10;
+}
+
+.availabilityText {
+  font-size: 12px;
+  color: #454F5B;
+  background: rgba(255, 255, 255, 0.9);
+  padding: 2px 6px;
+  border-radius: 4px;
+}
+
+.compareButton {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  background: white;
+  border: 1px solid #eaeaea;
+  border-radius: 4px;
+  padding: 3px 6px;
+  font-size: 11px;
+  cursor: pointer;
+  z-index: 10;
+}
+
+.giftButton {
+  position: absolute;
+  top: 45px;
+  left: 10px;
+  background: white;
+  border: 1px solid #eaeaea;
+  border-radius: 4px;
+  padding: 3px 6px;
+  font-size: 11px;
+  cursor: pointer;
+  z-index: 10;
+  display: flex;
+  align-items: center;
+  gap: 3px;
+}
+
+.giftIcon {
+  width: 14px;
+  height: 14px;
+}
+
+.productInfo {
+  padding: 12px;
+  background: white;
+}
+
+.productName {
+  font-family: SF Pro Text, sans-serif;
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 20px;
+  color: #454F5B;
+  margin: 0 0 8px 0;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  min-height: 40px;
+}
+
+.reviewsBlock {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 8px;
+}
+
+.rating {
+  display: flex;
+  align-items: center;
+  gap: 3px;
+}
+
+.stars {
+  color: #FFC107;
+  font-size: 14px;
+}
+
+.reviewsCount {
+  font-size: 12px;
+  color: #454F5B;
+}
+
+.priceBlock {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 12px;
+}
+
+.currentPrice {
+  font-family: SF Pro Text, sans-serif;
+  font-weight: 600;
+  font-size: 18px;
+  color: #000000;
+}
+
+.oldPrice {
+  font-family: SF Pro Text, sans-serif;
+  font-weight: 300;
+  font-size: 16px;
+  color: #454F5B;
+  text-decoration: line-through;
+}
+
+.actionButtons {
+  display: flex;
+  gap: 8px;
+  margin-top: 8px;
+}
+
+.cartButton {
+  flex: 1;
+  padding: 8px;
+  background: white;
+  border: 1px solid #4295E4;
+  color: #4295E4;
+  font-size: 13px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s;
+  border-radius: 6px;
+}
+
+.cartButton:hover {
+  background: #4295E4;
+  color: white;
+}
+
+.buyButton {
+  flex: 1;
+  padding: 8px;
+  background: #4295E4;
+  border: 1px solid #4295E4;
+  color: white;
+  font-size: 13px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s;
+  border-radius: 6px;
+}
+
+.buyButton:hover {
+  background: #2c5aa0;
+  border-color: #2c5aa0;
+}
+
+.empty_product_list {
+  grid-column: 1 / -1;
+  text-align: center;
+  padding: 2rem;
+  color: #666;
+  font-size: 1.1rem;
+}
+
+@media (max-width: 1024px) {
+  .productCard {
+    max-width: 260px;
+  }
+  
+  .productImage {
+    height: 200px;
+  }
+  
+  .currentPrice {
+    font-size: 16px;
+  }
+  
+  .oldPrice {
+    font-size: 14px;
+  }
+}
+
+@media (max-width: 768px) {
+  .productCard {
+    max-width: 230px;
+  }
+  
+  .productImage {
+    height: 180px;
+  }
+  
+  .productName {
+    font-size: 13px;
+    line-height: 18px;
+    min-height: 36px;
+  }
+  
+  .currentPrice {
+    font-size: 15px;
+  }
+  
+  .oldPrice {
+    font-size: 13px;
+  }
+  
+  .cartButton,
+  .buyButton {
+    padding: 6px;
+    font-size: 12px;
+  }
+  
+  .stars {
+    font-size: 12px;
+  }
+  
+  .reviewsCount {
+    font-size: 11px;
+  }
+}
+
+@media (max-width: 480px) {
+  .productCard {
+    max-width: 280px;
+  }
+  
+  .productImage {
+    height: 200px;
+  }
+}

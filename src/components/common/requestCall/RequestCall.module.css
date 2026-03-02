@@ -3,8 +3,8 @@
 .callback {
   max-width: 748px;
   margin: 0 auto;
-  padding: 40px 20px;
   text-align: center;
+  padding: 2rem 1rem;
 }
 
 .callback_title {

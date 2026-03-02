@@ -131,7 +131,7 @@ const PopularProduct: React.FC<PopularProductProps> = ({
                       <span className={s.availabilityText}>В наличии</span>
                     </div>
 
-                    <button className={s.compareButton}>Сравнить</button>
+                    <button className={s.compareButton}>SALE</button>
 
                     <button className={s.giftButton}>
                       <span className={s.giftIcon}>🎁</span>В подарок
@@ -154,21 +154,6 @@ const PopularProduct: React.FC<PopularProductProps> = ({
                         <span className={s.oldPrice}>
                           {Math.round(product.price * 1.2)} ₽
                         </span>
-                      </div>
-
-                      <div className={s.actionButtons}>
-                        <button
-                          className={s.cartButton}
-                          onClick={() => addToBasket(product)}
-                        >
-                          В корзину
-                        </button>
-                        <button
-                          className={s.buyButton}
-                          onClick={() => onProductClick?.(product)}
-                        >
-                          Купить
-                        </button>
                       </div>
                     </div>
                   </div>

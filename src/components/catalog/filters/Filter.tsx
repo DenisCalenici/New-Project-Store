@@ -47,15 +47,7 @@ const FilterProduct: React.FC<FilterProductProps> = ({
       {/* ИСПРАВЛЕНО: Заголовок с кнопкой закрытия для мобильных */}
       <div className={s.filter_header}>
         <h3 className={s.filter_title}>Фильтры</h3>
-        {onClose && (
-          <button
-            onClick={onClose}
-            className={s.close_button}
-            aria-label="Закрыть фильтры"
-          >
-            ✕
-          </button>
-        )}
+       
       </div>
 
       {/* ИСПРАВЛЕНО: Секция сортировки */}
