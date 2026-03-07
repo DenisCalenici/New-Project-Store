@@ -1,8 +1,8 @@
 import s from "./Footer.module.css";
-import logoF from "../../../../public//image/LogoF.png";
-import facebook from "../../../../public/image/facebook.png";
-import twitter from "../../../../public/image/twitter.png";
-import vk from "../../../../public/image/vk.png";
+import logoF from "../../../public//image/LogoF.png";
+import facebook from "../../../public/image/facebook.png";
+import twitter from "../../../public/image/twitter.png";
+import vk from "../../../public/image/vk.png";
 import { Link } from "react-router-dom";
 
 const Footer = () => {

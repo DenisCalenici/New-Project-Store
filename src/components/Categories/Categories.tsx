@@ -13,24 +13,21 @@ const Categories: React.FC = () => {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    // Загрузка категорий с API
     const fetchCategories = async () => {
       try {
         const response = await fetch('https://fakestoreapi.com/products/categories');
         const data = await response.json();
         
-        // Берем только 4 категории
         const formattedCategories = data.slice(0, 4).map((cat: string, index: number) => ({
           id: index + 1,
-          title: cat.charAt(0).toUpperCase() + cat.slice(1), // Делаем первую букву заглавной
-          image: `https://via.placeholder.com/400x225/4295E4/ffffff?text=${cat}`, // Заглушка
+          title: cat.charAt(0).toUpperCase() + cat.slice(1),
+          image: `https://via.placeholder.com/400x225/4295E4/ffffff?text=${cat}`,
           link: `/category/${cat}`
         }));
         
         setCategories(formattedCategories);
       } catch (error) {
         console.error('Ошибка загрузки категорий:', error);
-        // Заглушка при ошибке
         setCategories([
           { id: 1, title: 'Электроника', image: 'https://via.placeholder.com/400x225/4295E4/ffffff?text=Electronics', link: '/category/electronics' },
           { id: 2, title: 'Одежда', image: 'https://via.placeholder.com/400x225/4295E4/ffffff?text=Clothing', link: '/category/clothing' },

@@ -1,17 +1,15 @@
 // components/filters/FilterProduct.tsx
 import React from "react";
-// ИСПРАВЛЕНО: Импортируем тип из хука
 import type { FilterState } from "../../../hooks/useProductFilter";
 import s from "./Filter.module.css";
 
-// ИСПРАВЛЕНО: Добавляем все необходимые пропсы
 export interface FilterProductProps {
   filters: FilterState;
   categories: string[];
   onCategoryChange: (category: string) => void;
   onPriceRangeChange: (min: number, max: number) => void;
   onSearchChange: (query: string) => void;
-  onSortChange?: (sortBy: FilterState["sortBy"]) => void; // ИСПРАВЛЕНО: Добавлено
+  onSortChange?: (sortBy: FilterState["sortBy"]) => void;
   onClose?: () => void;
   onReset: () => void;
   className?: string;
@@ -28,14 +26,11 @@ const FilterProduct: React.FC<FilterProductProps> = ({
   onReset,
   className = "",
 }) => {
-  // ИСПРАВЛЕНО: Функция для форматирования категории
   const formatCategoryName = (category: string): string => {
     if (category === "all") return "Все категории";
-    // Первая буква заглавная, остальные строчные
     return category.charAt(0).toUpperCase() + category.slice(1).toLowerCase();
   };
 
-  // ИСПРАВЛЕНО: Проверяем, есть ли активные фильтры
   const hasActiveFilters =
     filters.category !== "all" ||
     filters.searchQuery.trim() !== "" ||
@@ -44,13 +39,10 @@ const FilterProduct: React.FC<FilterProductProps> = ({
 
   return (
     <div className={`${s.filter_container} ${className}`}>
-      {/* ИСПРАВЛЕНО: Заголовок с кнопкой закрытия для мобильных */}
       <div className={s.filter_header}>
         <h3 className={s.filter_title}>Фильтры</h3>
-       
       </div>
 
-      {/* ИСПРАВЛЕНО: Секция сортировки */}
       {onSortChange && (
         <div className={s.filter_section}>
           <h4 className={s.filter_section_title}>Сортировка</h4>
@@ -58,7 +50,6 @@ const FilterProduct: React.FC<FilterProductProps> = ({
             value={filters.sortBy}
             onChange={(e) => {
               const value = e.target.value as FilterState["sortBy"];
-              console.log("Изменена сортировка на:", value);
               onSortChange(value);
             }}
             className={s.sort_select}
@@ -72,7 +63,6 @@ const FilterProduct: React.FC<FilterProductProps> = ({
         </div>
       )}
 
-      {/* ИСПРАВЛЕНО: Секция поиска */}
       <div className={s.filter_section}>
         <h4 className={s.filter_section_title}>Поиск</h4>
         <div className={s.search_container}>
@@ -80,11 +70,7 @@ const FilterProduct: React.FC<FilterProductProps> = ({
             type="text"
             placeholder="Поиск товаров..."
             value={filters.searchQuery}
-            onChange={(e) => {
-              const value = e.target.value;
-              console.log("Поисковый запрос:", value);
-              onSearchChange(value);
-            }}
+            onChange={(e) => onSearchChange(e.target.value)}
             className={s.search_input}
             aria-label="Поиск товаров по названию или описанию"
           />
@@ -100,7 +86,6 @@ const FilterProduct: React.FC<FilterProductProps> = ({
         </div>
       </div>
 
-      {/* ИСПРАВЛЕНО: Секция цены с улучшенным UX */}
       <div className={s.filter_section}>
         <h4 className={s.filter_section_title}>
           Цена: ${filters.priceRange[0]} - ${filters.priceRange[1]}
@@ -115,7 +100,6 @@ const FilterProduct: React.FC<FilterProductProps> = ({
                 onChange={(e) => {
                   const min = Math.max(0, Number(e.target.value));
                   const max = Math.max(min, filters.priceRange[1]);
-                  console.log("Изменение мин. цены:", min);
                   onPriceRangeChange(min, max);
                 }}
                 min="0"
@@ -133,7 +117,6 @@ const FilterProduct: React.FC<FilterProductProps> = ({
                 onChange={(e) => {
                   const max = Math.min(1000, Number(e.target.value));
                   const min = Math.min(filters.priceRange[0], max);
-                  console.log("Изменение макс. цены:", max);
                   onPriceRangeChange(min, max);
                 }}
                 min="0"
@@ -143,7 +126,6 @@ const FilterProduct: React.FC<FilterProductProps> = ({
               />
             </label>
           </div>
-          {/* ИСПРАВЛЕНО: Range слайдер для лучшего UX */}
           <div className={s.price_slider_container}>
             <input
               type="range"
@@ -171,7 +153,6 @@ const FilterProduct: React.FC<FilterProductProps> = ({
         </div>
       </div>
 
-      {/* ИСПРАВЛЕНО: Секция категорий с radio кнопками */}
       <div className={s.filter_section}>
         <h4 className={s.filter_section_title}>Категории</h4>
         <div className={s.categories_list} role="radiogroup" aria-label="Выбор категории товаров">
@@ -187,10 +168,7 @@ const FilterProduct: React.FC<FilterProductProps> = ({
                 name="category"
                 value={category}
                 checked={filters.category === category}
-                onChange={() => {
-                  console.log("Выбрана категория:", category);
-                  onCategoryChange(category);
-                }}
+                onChange={() => onCategoryChange(category)}
                 className={s.category_radio}
                 aria-checked={filters.category === category}
               />
@@ -205,13 +183,9 @@ const FilterProduct: React.FC<FilterProductProps> = ({
         </div>
       </div>
 
-      {/* ИСПРАВЛЕНО: Кнопка сброса фильтров */}
       <div className={s.filter_actions}>
         <button
-          onClick={() => {
-            console.log("Нажата кнопка сброса фильтров");
-            onReset();
-          }}
+          onClick={() => onReset()}
           className={`${s.reset_button} ${
             !hasActiveFilters ? s.reset_button_disabled : ""
           }`}
@@ -225,7 +199,6 @@ const FilterProduct: React.FC<FilterProductProps> = ({
         </button>
       </div>
 
-      {/* ИСПРАВЛЕНО: Информация о текущих фильтрах */}
       {hasActiveFilters && (
         <div className={s.active_filters_info}>
           <h5 className={s.active_filters_title}>Активные фильтры:</h5>

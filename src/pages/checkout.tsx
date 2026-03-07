@@ -1,14 +1,13 @@
-import CheckoutForm from '../components/common/checkout/CheckoutForm';
+import CheckoutForm from "../components/Checkout/CheckoutForm";
 
-import Layout from '../components/common/layout/Layout';
-const Forms=()=> {
-    return (
-        <div >
-
-            <Layout title="Форма">
-                <CheckoutForm />
-            </Layout>
-        </div>
-    );
-}
-export default Forms
+import Layout from "../components/Layout/Layout";
+const Forms = () => {
+  return (
+    <div>
+      <Layout title="Форма">
+        <CheckoutForm />
+      </Layout>
+    </div>
+  );
+};
+export default Forms;

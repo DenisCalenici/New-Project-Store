@@ -2,9 +2,9 @@ import s from "./CheckoutForm.module.css";
 import { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 
-import type { IProductCard } from "../../catalog/product/ProductCard.type";
-import { fetchProductById } from "../../../api/product";
-import Layout from "../layout/Layout";
+import type { IProductCard } from "../catalog/product/ProductCard.type";
+import { fetchProductById } from "../../api/product";
+import Layout from "../Layout/Layout";
 interface CheckoutFormProps {
   surname: string;
   name: string;

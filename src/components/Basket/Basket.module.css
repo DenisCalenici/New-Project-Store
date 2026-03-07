@@ -1,4 +1,4 @@
-.basket-overlay {
+.basket_overlay {
   position: fixed;
   top: 0;
   left: 0;
@@ -6,47 +6,42 @@
   bottom: 0;
   background-color: rgba(0, 0, 0, 0.5);
   display: flex;
-  justify-content: flex-end;
+  justify-content: center;
+  align-items: center;
   z-index: 1000;
 }
 
-.basket-modal {
-  width: 400px;
+.basket_modal {
   background-color: white;
-  height: 100%;
+  border-radius: 8px;
+  max-width: 500px;
+  width: 90%;
+  max-height: 80vh;
   overflow-y: auto;
-  animation: slideIn 0.3s ease;
+  position: relative;
+  z-index: 1001;
 }
 
-@keyframes slideIn {
-  from {
-    transform: translateX(100%);
-  }
-  to {
-    transform: translateX(0);
-  }
-}
-
-.basket-header {
-  padding: 20px;
-  border-bottom: 1px solid #eee;
+.basket_header {
   display: flex;
   justify-content: space-between;
   align-items: center;
+  padding: 15px 20px;
+  border-bottom: 1px solid #eee;
 }
 
-.close-btn {
+.close_btn {
   background: none;
   border: none;
   font-size: 24px;
   cursor: pointer;
 }
 
-.basket-items {
+.basket_items {
   padding: 20px;
 }
 
-.basket-item {
+.basket_item {
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -54,59 +49,58 @@
   border-bottom: 1px solid #eee;
 }
 
-.item-info {
+.item_info {
   display: flex;
-  gap: 10px;
+  gap: 15px;
+  align-items: center;
 }
 
-.item-info img {
+.item_info img {
   width: 50px;
   height: 50px;
   object-fit: cover;
 }
 
-.item-controls {
+.item_controls {
   display: flex;
   gap: 10px;
   align-items: center;
 }
 
-.item-controls input {
+.item_controls input {
   width: 60px;
   padding: 5px;
 }
 
-.basket-footer {
-  padding: 20px;
+.basket_footer {
+  padding: 15px 20px;
   border-top: 1px solid #eee;
-  position: sticky;
-  bottom: 0;
-  background: white;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 }
 
 .total {
   font-size: 18px;
   font-weight: bold;
-  margin-bottom: 10px;
 }
 
-.checkout-btn {
-  width: 100%;
-  padding: 10px;
-  background-color: #4CAF50;
+.checkout_btn {
+  background-color: #007bff;
   color: white;
   border: none;
+  padding: 10px 20px;
   border-radius: 4px;
   cursor: pointer;
 }
 
-.checkout-btn:disabled {
+.checkout_btn:disabled {
   background-color: #ccc;
   cursor: not-allowed;
 }
 
-.empty-basket {
+.empty_basket {
   text-align: center;
   color: #999;
-  padding: 40px;
+  padding: 20px;
 }

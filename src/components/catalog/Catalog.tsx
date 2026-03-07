@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from "react";
-import Layout from "../common/layout/Layout";
+import Layout from "../Layout/Layout";
 import FilterProduct from "./filters/Filter";
 import ProductList from "./product/ProductList";
-import Basket from "../common/basket/Basket";
+import Basket from "../Basket/Basket";
 import s from "./Catalog.module.css";
 import Ceo from "../common/ceo/Ceo";
 import PopularProduct from "../common/popularProduct/PopularProduct";
@@ -10,7 +10,6 @@ import {
   useProductFilter,
   type IProductCard,
 } from "../../hooks/useProductFilter";
-import { Link } from "react-router-dom";
 
 interface BasketItem {
   id: number;
@@ -45,13 +44,13 @@ const Catalog: React.FC<CatalogProps> = ({
 
   const addToBasket = (product: IProductCard) => {
     setBasketItems((prevItems: BasketItem[]) => {
-      const existingItem = prevItems.find(item => item.id === product.id);
-      
+      const existingItem = prevItems.find((item) => item.id === product.id);
+
       if (existingItem) {
-        return prevItems.map(item =>
+        return prevItems.map((item) =>
           item.id === product.id
             ? { ...item, quantity: item.quantity + 1 }
-            : item
+            : item,
         );
       } else {
         const newItem: BasketItem = {
@@ -59,30 +58,34 @@ const Catalog: React.FC<CatalogProps> = ({
           name: product.title,
           price: product.price,
           quantity: 1,
-          image: product.image
+          image: product.image,
         };
         return [...prevItems, newItem];
       }
     });
-    
+
     console.log("✅ Товар добавлен в корзину:", product.title);
+    
+    // Автоматически открываем корзину при добавлении товара
+    openBasket();
   };
 
   const updateQuantity = (id: number, quantity: number) => {
     setBasketItems((prevItems: BasketItem[]) =>
-      prevItems.map(item =>
-        item.id === id ? { ...item, quantity } : item
-      )
+      prevItems.map((item) => (item.id === id ? { ...item, quantity } : item)),
     );
   };
 
   const removeItem = (id: number) => {
-    setBasketItems((prevItems: BasketItem[]) => 
-      prevItems.filter(item => item.id !== id)
+    setBasketItems((prevItems: BasketItem[]) =>
+      prevItems.filter((item) => item.id !== id),
     );
   };
 
-  const totalBasketItems = basketItems.reduce((sum, item) => sum + item.quantity, 0);
+  const totalBasketItems = basketItems.reduce(
+    (sum, item) => sum + item.quantity,
+    0,
+  );
 
   useEffect(() => {
     console.log("🔄 Catalog: Запрос данных...");
@@ -125,14 +128,17 @@ const Catalog: React.FC<CatalogProps> = ({
   const totalPages = Math.ceil(filteredProducts.length / productsPerPage);
   const indexOfLastProduct = currentPage * productsPerPage;
   const indexOfFirstProduct = indexOfLastProduct - productsPerPage;
-  const currentProducts = filteredProducts.slice(indexOfFirstProduct, indexOfLastProduct);
+  const currentProducts = filteredProducts.slice(
+    indexOfFirstProduct,
+    indexOfLastProduct,
+  );
 
   const goToPreviousPage = () => {
-    setCurrentPage(prev => Math.max(prev - 1, 1));
+    setCurrentPage((prev) => Math.max(prev - 1, 1));
   };
 
   const goToNextPage = () => {
-    setCurrentPage(prev => Math.min(prev + 1, totalPages));
+    setCurrentPage((prev) => Math.min(prev + 1, totalPages));
   };
 
   const goToPage = (pageNumber: number) => {
@@ -187,6 +193,18 @@ const Catalog: React.FC<CatalogProps> = ({
             <h1 className={s.h1}>
               {title} ({filteredProducts.length})
             </h1>
+            
+            {/* Кнопка корзины в шапке */}
+            <button 
+              className={s.basket_icon_button}
+              onClick={openBasket}
+              aria-label="Открыть корзину"
+            >
+              🛒
+              {totalBasketItems > 0 && (
+                <span className={s.basket_count}>{totalBasketItems}</span>
+              )}
+            </button>
           </div>
 
           <div className={s.catalog_controls}>
@@ -199,9 +217,7 @@ const Catalog: React.FC<CatalogProps> = ({
               title="Сбросить все фильтры"
             >
               Сбросить фильтры
-              {hasActiveFilters && (
-                <span className={s.reset_badge}></span>
-              )}
+              {hasActiveFilters && <span className={s.reset_badge}></span>}
             </button>
             {hasActiveFilters && (
               <span className={s.active_filters_badge}>
@@ -276,8 +292,7 @@ const Catalog: React.FC<CatalogProps> = ({
               ) : (
                 <>
                   <div className={s.products_grid}>
-                    {/* <Link  to={`/product/${productId}`}></Link> */}
-                    <ProductList 
+                    <ProductList
                       products={currentProducts}
                       addToBasket={addToBasket}
                       onProductClick={onProductClick}
@@ -295,19 +310,23 @@ const Catalog: React.FC<CatalogProps> = ({
                         ←
                       </button>
 
-                      {Array.from({ length: totalPages }, (_, i) => i + 1).map((number) => (
-                        <button
-                          key={number}
-                          onClick={() => goToPage(number)}
-                          className={`${s.pagination_number} ${
-                            currentPage === number ? s.pagination_active : ""
-                          }`}
-                          aria-label={`Страница ${number}`}
-                          aria-current={currentPage === number ? "page" : undefined}
-                        >
-                          {number}
-                        </button>
-                      ))}
+                      {Array.from({ length: totalPages }, (_, i) => i + 1).map(
+                        (number) => (
+                          <button
+                            key={number}
+                            onClick={() => goToPage(number)}
+                            className={`${s.pagination_number} ${
+                              currentPage === number ? s.pagination_active : ""
+                            }`}
+                            aria-label={`Страница ${number}`}
+                            aria-current={
+                              currentPage === number ? "page" : undefined
+                            }
+                          >
+                            {number}
+                          </button>
+                        ),
+                      )}
 
                       <button
                         onClick={goToNextPage}
@@ -325,9 +344,9 @@ const Catalog: React.FC<CatalogProps> = ({
           </div>
         </div>
       </section>
-      
+
       <PopularProduct />
-      <Ceo/>
+      <Ceo />
 
       <Basket
         isOpen={isBasketOpen}

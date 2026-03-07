@@ -1,0 +1,429 @@
+.product_page {
+    margin: 0 auto;
+}
+
+.product_page_container {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    margin: 0 auto;
+    max-width: 1245px;
+}
+
+.product_image {
+    place-items: center;
+    max-width: 605px;
+
+
+
+
+}
+
+.image_nev {
+    max-width: 590px;
+    margin: 0 auto;
+}
+
+.product_image_nev {
+    max-width: 142px;
+}
+
+.product_color {
+    font-family: SF Pro Text;
+    font-weight: 600;
+    font-size: 16px;
+    line-height: 24px;
+    letter-spacing: 0%;
+}
+
+.p_color_1 {
+    width: 20px;
+    height: 20px;
+    background: white;
+    border: none;
+    margin: 5px 5px 5px 0px;
+}
+
+.p_color_2 {
+    width: 20px;
+    height: 20px;
+    background: #1B1A20;
+    border: none;
+    margin: 5px;
+}
+
+.p_color_3 {
+    width: 20px;
+    height: 20px;
+    background: #E2C355;
+    border: none;
+    margin: 5px;
+}
+
+.installation {
+    max-width: 340px;
+    margin: 20px 10px;
+    display: block;
+    opacity: 1;
+
+}
+
+.wooden_door {
+    display: inline;
+    font-family: SF Pro Text;
+    font-weight: 400;
+    font-size: 14px;
+    padding: 20px 10px;
+    line-height: 24px;
+    letter-spacing: 0%;
+
+}
+
+.rating {
+    font-family: SF Pro Text;
+    font-weight: 400;
+    font-size: 14px;
+
+    line-height: 21px;
+    letter-spacing: 5%;
+    vertical-align: middle;
+    width: 71;
+    height: 21;
+    top: 212px;
+    left: 735px;
+
+    opacity: 1;
+}
+
+.title_name {
+    font-family: SF Pro Text;
+    font-weight: 600;
+    font-size: 24px;
+
+    line-height: 30px;
+    letter-spacing: 0%;
+
+}
+
+.interior_door {
+    display: inline;
+    font-family: SF Pro Text;
+    font-weight: 400;
+    font-size: 14px;
+    padding: 20px 10px;
+    line-height: 24px;
+    letter-spacing: 0%;
+
+}
+
+.product_filter {
+    display: flex;
+    gap: 10px;
+    padding: 10px 0px;
+}
+
+.purchase_button {
+
+    width: 288px;
+    height: 50px;
+    opacity: 1;
+    background: #4295E4;
+    font-family: SF Pro Display;
+    font-weight: 500;
+    font-size: 16px;
+    line-height: 100%;
+    text-align: center;
+    border: none;
+    color: white;
+    margin: 10px;
+}
+
+.price {
+    font-family: SF Pro Text;
+    font-weight: 600;
+    font-size: 22px;
+    line-height: 100%;
+    letter-spacing: 0%;
+    padding: 10px 0px;
+}
+
+.like_button {
+
+
+    background: white;
+    margin: 0px 20px;
+    padding: 0;
+    width: 288px;
+    height: 50px;
+    opacity: 1;
+    margin: 10px;
+    font-family: SF Pro Display;
+    font-weight: 500;
+    font-size: 16px;
+    line-height: 100%;
+    text-align: center;
+    border: none;
+    color: #4D4D4D;
+}
+
+.product_complection {
+    font-family: SF Pro Text;
+    font-weight: 600;
+    font-size: 16px;
+    line-height: 24px;
+    letter-spacing: 0%;
+
+}
+
+.product_complection_button {
+    display: flex;
+    justify-content: space-between;
+    background: white;
+    opacity: 0.1;
+    width: 288px;
+    height: 40px;
+    border-width: 1px;
+    opacity: 1;
+    align-items: center;
+    border: 3px solid transparent;
+    border-color: rgba(0, 0, 0, 0.1);
+
+}
+
+.like_img {
+    height: 16px;
+    display: inline;
+}
+
+.like_p {
+    padding: 5px;
+    position: relative;
+    top: -3px;
+    display: inline;
+    height: 24px;
+}
+
+
+
+.payment {
+    display: flex;
+    min-width: 313px;
+    height: 58px;
+    padding: 16px;
+    gap: 12px;
+    border: none;
+    background: white;
+    justify-content: space-between;
+    font-family: SF Pro Text;
+    font-weight: 500;
+    font-size: 16px;
+    line-height: 26px;
+    letter-spacing: 0%;
+}
+
+.installation_and_delivery {
+    display: flex;
+    min-width: 313px;
+    height: 58px;
+    padding: 16px;
+    gap: 12px;
+    border: none;
+    background: white;
+    justify-content: space-between;
+    font-family: SF Pro Text;
+    font-weight: 500;
+    font-size: 16px;
+    line-height: 26px;
+    letter-spacing: 0%;
+}
+
+.guarantee_and_benefit {
+    display: flex;
+    min-width: 313px;
+    height: 58px;
+    padding: 16px;
+    gap: 12px;
+    border: none;
+    background: white;
+    justify-content: space-between;
+    font-family: SF Pro Text;
+    font-weight: 500;
+    font-size: 16px;
+    line-height: 26px;
+    letter-spacing: 0%;
+}
+
+
+
+.errorContainer {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 60vh;
+    text-align: center;
+    gap: 20px;
+}
+
+.container_body {
+    margin: 0 auto;
+    max-width: 1245px;
+}
+
+.retryButton {
+    padding: 12px 24px;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: transform 0.2s ease;
+}
+
+.retryButton:hover {
+    transform: translateY(-2px);
+}
+
+.button_add {
+    display: flex;
+}
+
+@media (max-width: 1025px) {
+
+    .product_page_container {
+
+        grid-template-columns: 1fr;
+
+
+    }
+
+    .button_add {
+        display: block;
+
+    }
+
+    .title_name {
+        font-family: SF Pro Text;
+        font-weight: 600;
+        font-size: 22px;
+
+        line-height: 32px;
+
+
+    }
+
+    .product_filter {
+        display: block;
+
+    }
+
+    .product_color {
+        padding: 20px 0px;
+    }
+}
+
+.accordion_button {
+
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    padding: 16px 20px;
+    background: #ffffff;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    text-align: left;
+    font-family: inherit;
+    font-size: 16px;
+    font-weight: 500;
+    line-height: 1.5;
+}
+
+.accordion_p {
+    padding: 16px 20px;
+    font-family: inherit;
+    font-size: 16px;
+    font-weight: 500;
+    line-height: 1.5;
+    background: #f7fafc;
+    border-color: #e2e8f0;
+}
+
+.accordion_img {
+    width: 20px;
+    height: 20px;
+    transition: transform 0.3s ease;
+    flex-shrink: 0;
+    margin-left: 12px;
+}
+
+
+.accordion_button:hover {
+    background: #f8f9fa;
+
+}
+
+.accordion_button:focus {
+    outline: none;
+
+}
+
+.accordion_button:active {
+    transform: translateY(1px);
+}
+
+
+.accordion_button.accordion_button_active {
+    background: #f7fafc;
+
+    border-bottom-left-radius: 0;
+    border-bottom-right-radius: 0;
+
+    img {
+        transform: rotate(180deg);
+    }
+}
+
+
+.accordion_button:disabled {
+    background: #f7fafc;
+    border-color: #e2e8f0;
+    color: #a0aec0;
+    cursor: not-allowed;
+
+
+}
+
+.accordion_button:hover {
+
+    border-color: #e2e8f0;
+    box-shadow: none;
+}
+
+
+@media (max-width: 768px) {
+    .accordion_button {
+        padding: 14px 16px;
+        font-size: 15px;
+
+        img {
+            width: 18px;
+            height: 18px;
+        }
+    }
+}
+
+@media (max-width: 480px) {
+    .accordion_button {
+        padding: 12px 14px;
+        font-size: 14px;
+
+        img {
+            width: 16px;
+            height: 16px;
+            margin-left: 8px;
+        }
+    }
+}

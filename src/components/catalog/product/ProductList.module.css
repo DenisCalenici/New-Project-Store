@@ -7,7 +7,9 @@
   padding: 0;
   margin: 0 auto;
   box-sizing: border-box;
-  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  transition:
+    transform 0.2s ease,
+    box-shadow 0.2s ease;
 }
 
 .productCard:hover {
@@ -50,7 +52,7 @@
 
 .availabilityText {
   font-size: 12px;
-  color: #454F5B;
+  color: #454f5b;
   background: rgba(255, 255, 255, 0.9);
   padding: 2px 6px;
   border-radius: 4px;
@@ -96,11 +98,13 @@
 }
 
 .productName {
-  font-family: SF Pro Text, sans-serif;
+  font-family:
+    SF Pro Text,
+    sans-serif;
   font-weight: 400;
   font-size: 14px;
   line-height: 20px;
-  color: #454F5B;
+  color: #454f5b;
   margin: 0 0 8px 0;
   display: -webkit-box;
   -webkit-line-clamp: 2;
@@ -123,13 +127,13 @@
 }
 
 .stars {
-  color: #FFC107;
+  color: #ffc107;
   font-size: 14px;
 }
 
 .reviewsCount {
   font-size: 12px;
-  color: #454F5B;
+  color: #454f5b;
 }
 
 .priceBlock {
@@ -140,17 +144,21 @@
 }
 
 .currentPrice {
-  font-family: SF Pro Text, sans-serif;
+  font-family:
+    SF Pro Text,
+    sans-serif;
   font-weight: 600;
   font-size: 18px;
   color: #000000;
 }
 
 .oldPrice {
-  font-family: SF Pro Text, sans-serif;
+  font-family:
+    SF Pro Text,
+    sans-serif;
   font-weight: 300;
   font-size: 16px;
-  color: #454F5B;
+  color: #454f5b;
   text-decoration: line-through;
 }
 
@@ -164,8 +172,8 @@
   flex: 1;
   padding: 8px;
   background: white;
-  border: 1px solid #4295E4;
-  color: #4295E4;
+  border: 1px solid #4295e4;
+  color: #4295e4;
   font-size: 13px;
   font-weight: 500;
   cursor: pointer;
@@ -174,15 +182,15 @@
 }
 
 .cartButton:hover {
-  background: #4295E4;
+  background: #4295e4;
   color: white;
 }
 
 .buyButton {
   flex: 1;
   padding: 8px;
-  background: #4295E4;
-  border: 1px solid #4295E4;
+  background: #4295e4;
+  border: 1px solid #4295e4;
   color: white;
   font-size: 13px;
   font-weight: 500;
@@ -208,15 +216,15 @@
   .productCard {
     max-width: 260px;
   }
-  
+
   .productImage {
     height: 200px;
   }
-  
+
   .currentPrice {
     font-size: 16px;
   }
-  
+
   .oldPrice {
     font-size: 14px;
   }
@@ -226,35 +234,35 @@
   .productCard {
     max-width: 230px;
   }
-  
+
   .productImage {
     height: 180px;
   }
-  
+
   .productName {
     font-size: 13px;
     line-height: 18px;
     min-height: 36px;
   }
-  
+
   .currentPrice {
     font-size: 15px;
   }
-  
+
   .oldPrice {
     font-size: 13px;
   }
-  
+
   .cartButton,
   .buyButton {
     padding: 6px;
     font-size: 12px;
   }
-  
+
   .stars {
     font-size: 12px;
   }
-  
+
   .reviewsCount {
     font-size: 11px;
   }
@@ -264,8 +272,37 @@
   .productCard {
     max-width: 280px;
   }
-  
+
   .productImage {
     height: 200px;
   }
 }
+.productLink {
+  display: block;
+  text-decoration: none;
+  color: inherit;
+  cursor: pointer;
+}
+
+.productNameLink {
+  text-decoration: none;
+  color: inherit;
+  display: block;
+}
+
+.productNameLink:hover .productName {
+  color: #4295e4;
+}
+
+.productImage {
+  width: 100%;
+  height: 200px;
+  object-fit: contain;
+  transition: transform 0.3s ease;
+}
+
+.productImage:hover {
+  transform: scale(1.05);
+}
+
+

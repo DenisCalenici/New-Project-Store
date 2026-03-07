@@ -18,7 +18,7 @@ export type { IProductCard };
 //}
 export interface BasketItem {
   id: number;
-  name: string;  // Здесь name - это название товара для корзины
+  name: string;  
   price: number;
   quantity: number;
   image: string;

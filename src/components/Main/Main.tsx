@@ -1,10 +1,10 @@
 import React, { useState, useEffect, useRef } from "react";
 import s from "./Main.module.css";
-import type { IProductCard } from "../../../hooks/useProductFilter";
-import Numbers from "../numbers/Numbers";
-import WhyChooseUs from "../whyChooseUs/WhyChooseUs";
-import PopularProduct from "../popularProduct/PopularProduct";
-import Categories from "../categories";
+import type { IProductCard } from "../../hooks/useProductFilter";
+import Numbers from "../Numbers/Numbers";
+import WhyChooseUs from "../WhyChooseUs/WhyChooseUs";
+import PopularProduct from "../common/popularProduct/PopularProduct";
+import Categories from "../Categories";
 
 interface MainProps {
   title?: string;
@@ -100,7 +100,6 @@ const Main: React.FC<MainProps> = ({
     <div className={s.main_container}>
       <section className={s.main_section}>
         <div className={s.main_catalog_container}>
-          {/* Центрированная карточка товара */}
           <div className={s.productCenterWrapper}>
             <button
               className={`${s.nav_button} ${s.nav_button_prev}`}
@@ -111,7 +110,6 @@ const Main: React.FC<MainProps> = ({
             </button>
 
             <div className={s.productCard}>
-              {/* Левая часть - изображение */}
               <div className={s.productImageLeft}>
                 <img
                   src={currentProduct.image}
@@ -120,16 +118,15 @@ const Main: React.FC<MainProps> = ({
                 />
               </div>
 
-              {/* Правая часть - информация */}
               <div className={s.productInfoRight}>
                 <h3 className={s.productName}>{currentProduct.title}</h3>
-                
+
                 <p className={s.productDescription}>
-                  {currentProduct.description 
-                    ? `${currentProduct.description.substring(0, 150)}...` 
-                    : 'Описание товара временно отсутствует'}
+                  {currentProduct.description
+                    ? `${currentProduct.description.substring(0, 150)}...`
+                    : "Описание товара временно отсутствует"}
                 </p>
-                
+
                 <div className={s.priceBlock}>
                   <span className={s.currentPrice}>
                     {currentProduct.price} ₽
@@ -138,7 +135,7 @@ const Main: React.FC<MainProps> = ({
                     {Math.round(currentProduct.price * 1.2)} ₽
                   </span>
                 </div>
-                
+
                 <button
                   className={s.addToCartButton}
                   onClick={() => addToBasket(currentProduct)}
@@ -157,7 +154,6 @@ const Main: React.FC<MainProps> = ({
             </button>
           </div>
 
-       
           <div className={s.productCounter}>
             {currentIndex + 1} / {products.length}
           </div>

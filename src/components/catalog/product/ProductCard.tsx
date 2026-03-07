@@ -4,10 +4,11 @@ import hihi from "../../../../public/image/Logo.png";
 import { useCartActions } from "../../../hooks/useCartAction";
 import { useState } from "react";
 import { IProductCard } from "../../../hooks/useProductFilter";
+
 interface ProductProps {
   product: IProductCard;
   onProductClick?: (product: IProductCard) => void;
-  onAddToBasket?: (product: IProductCard) => void; // ✅ Добавлен пропс для добавления в корзину
+  onAddToBasket?: (product: IProductCard) => void;
 }
 
 const ProductCard = ({
@@ -19,7 +20,6 @@ const ProductCard = ({
   const [isExpanded, setIsExpanded] = useState(false);
   const [imageError, setImageError] = useState(false);
 
-  // Валидация продукта
   const validateProduct = (
     product: IProductCard,
   ): {
@@ -83,7 +83,6 @@ const ProductCard = ({
     );
   }
 
-  // Безопасное извлечение данных с fallback значениями
   const productId = String(product.id);
   const productTitle = product.title?.trim() || "Без названия";
   const productDescription = product.description?.trim() || "";
@@ -107,13 +106,31 @@ const ProductCard = ({
   const handleAddToBasketClick = (e: React.MouseEvent) => {
     e.stopPropagation();
     e.preventDefault();
-    console.log("Добавление в корзину:", productTitle);
+    console.log("🔥 Добавление в корзину через кнопку SALE:", productTitle);
 
-    // ✅ Используем пропс onAddToBasket если он передан, иначе используем handleAddToBasket из хука
+    if (onAddToBasket) {
+      console.log("✅ Использую onAddToBasket из пропсов");
+      onAddToBasket(product);
+    } else {
+      console.log("✅ Использую handleAddToBasket из хука");
+      handleAddToBasket(e, product);
+    }
+  };
+
+  const handleImageClick = (e: React.MouseEvent) => {
+    e.stopPropagation();
+    e.preventDefault();
+    console.log("🖼️ Добавление в корзину через изображение:", productTitle);
+    
     if (onAddToBasket) {
       onAddToBasket(product);
     } else {
-      handleAddToBasket(e, product);
+      // Создаем синтетическое событие для handleAddToBasket
+      const syntheticEvent = {
+        stopPropagation: () => {},
+        preventDefault: () => {}
+      } as React.MouseEvent;
+      handleAddToBasket(syntheticEvent, product);
     }
   };
 
@@ -124,7 +141,7 @@ const ProductCard = ({
   };
 
   const handleImageError = () => {
-    console.warn("Ошибка загрузки изображения для продукта:", productId);
+    console.warn("⚠️ Ошибка загрузки изображения для продукта:", productId);
     setImageError(true);
   };
 
@@ -138,20 +155,18 @@ const ProductCard = ({
       >
         <div className={s.filter_castle}>
           <div className={s.filter_castle_button_container}>
-            {/* Кнопка избранного */}
             <button
               className={s.filter_castle_button_1}
               onClick={(e) => {
                 e.stopPropagation();
                 e.preventDefault();
-                console.log("Добавить в избранное:", productTitle);
+                console.log("❤️ Добавить в избранное:", productTitle);
               }}
               aria-label="Добавить в избранное"
             >
               ♡
             </button>
 
-            {/* ✅ ИСПРАВЛЕНО: Кнопка "SALE" для добавления в корзину */}
             <button
               onClick={handleAddToBasketClick}
               className={`${s.filter_castle_button_2} ${
@@ -162,17 +177,15 @@ const ProductCard = ({
               SALE
             </button>
 
-            {/* Статус наличия */}
             <p
               className={`${s.filter_castle_availability_p} ${
                 isAvailable ? s.in_stock : s.out_of_stock
               }`}
             >
-              {isAvailable ? "В наличии" : "Нет в наличии"}
+              {isAvailable ? "✅ В наличии" : "❌ Нет в наличии"}
             </p>
           </div>
 
-          {/* Блок с подарком */}
           {hasDiscount && (
             <div className={s.filter_castle_button_body3}>
               <button className={s.filter_castle_button_3}>
@@ -181,37 +194,41 @@ const ProductCard = ({
                   src={hihi}
                   alt="Иконка подарка"
                 />
-                Подарок
+                🎁 Подарок
               </button>
             </div>
           )}
 
-          {/* Изображение товара */}
-          <img
-            src={productImage}
-            className={s.filter_castle_img}
-            alt={productTitle}
-            onError={handleImageError}
-            loading="lazy"
-          />
+          {/* Оборачиваем изображение в div с обработчиком клика */}
+          <div onClick={handleImageClick} className={s.image_wrapper}>
+            <img
+              src={productImage}
+              className={s.filter_castle_img}
+              alt={productTitle}
+              onError={handleImageError}
+              loading="lazy"
+            />
+          </div>
         </div>
 
-        {/* Название товара */}
-        <h2
-          className={`${s.price_card_name_p} ${isExpanded ? s.expanded : ""}`}
-          onClick={handleTitleClick}
-          title={isExpanded ? "Скрыть описание" : "Показать описание"}
-        >
-          {productTitle}
-          <span className={s.expand_icon}>{isExpanded ? "▲" : "▼"}</span>
-        </h2>
+        <div className={s.title_wrapper}>
+          <h2
+            className={`${s.price_card_name_p} ${isExpanded ? s.expanded : ""}`}
+            onClick={handleTitleClick}
+            title={isExpanded ? "Скрыть описание" : "Показать описание"}
+          >
+            {productTitle}
+            <span className={s.expand_icon}>{isExpanded ? "▲" : "▼"}</span>
+          </h2>
+        </div>
 
-        {/* Описание товара (показывается при развертывании) */}
         {isExpanded && productDescription && (
-          <p className={s.product_description}>{productDescription}</p>
+          <p className={s.product_description}>
+            📝 {productDescription.substring(0, 150)}
+            {productDescription.length > 150 && "..."}
+          </p>
         )}
 
-        {/* Рейтинг товара */}
         <div className={s.rating_container}>
           <div
             className={s.rating_stars}
@@ -221,11 +238,13 @@ const ProductCard = ({
             {"☆".repeat(5 - Math.round(productRating.rate))}
           </div>
           <p className={s.price_card_reviews_p}>
-            {productRating.rate.toFixed(1)} ({productRating.count} отзывов)
+            ⭐ {productRating.rate.toFixed(1)} 
+            <span className={s.reviews_count}>
+              ({productRating.count} отзывов)
+            </span>
           </p>
         </div>
 
-        {/* Цена товара */}
         <div className={s.price_container}>
           <p className={s.price_current_price}>
             {hasDiscount ? (
@@ -242,7 +261,9 @@ const ProductCard = ({
               `$${productPrice.toFixed(2)}`
             )}
           </p>
-          <p className={s.price_category}>Категория: {productCategory}</p>
+          <p className={s.price_category}>
+            📁 Категория: {productCategory}
+          </p>
         </div>
       </Link>
     </div>

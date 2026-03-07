@@ -1,5 +1,5 @@
-import imgReturn from "../../../../public/image/product-return 1.png";
-import evaluate from "../../../../public/image/evaluate 1.png";
+import imgReturn from "../../../public/image/product-return 1.png";
+import evaluate from "../../../public/image/evaluate 1.png";
 import s from "./WhyChooseUs.module.css";
 const WhyChooseUs = () => {
   return (

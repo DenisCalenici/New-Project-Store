@@ -204,9 +204,8 @@
   border-bottom: 1px solid #eaeaea;
 }
 .mobile_contacts {
-  margin-top: 30px;
-  padding-top: 20px;
-  border-top: 1px solid #eaeaea;
+  position: fixed;
+  bottom: 0;
 }
 .mobile_phone {
   display: flex;
@@ -220,9 +219,14 @@
   text-decoration: none;
 }
 .mobile_icons {
+gap: 10px;
+   position: fixed;
+  top: 50px; 
+  left: 200px;
+  width: 50px;
   display: flex;
-  gap: 20px;
-  justify-content: center;
+
+ 
 }
 .menu_overlay {
   display: none;

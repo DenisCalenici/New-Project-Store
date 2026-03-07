@@ -1,8 +1,8 @@
-import Layout from "../layout/Layout";
+import Layout from "../Layout/Layout";
 
 const Favorites = () => {
   return (
-    <Layout title={'Favorites'}>
+    <Layout title={"Favorites"}>
       <div>
         <h1>Избранное</h1>
         <p>Здесь будут ваши избранные товары</p>

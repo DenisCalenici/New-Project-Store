@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "react-router-dom";
 import { IProductCard } from "../../../hooks/useProductFilter";
 import s from "./ProductList.module.css";
 
@@ -25,12 +26,14 @@ const ProductList: React.FC<ProductListProps> = ({
     <>
       {products.map((product) => (
         <div key={product.id} className={s.productCard}>
-          <img
-            src={product.image}
-            alt={product.title}
-            className={s.productImage}
-            onClick={() => onProductClick?.(product)}
-          />
+          <Link to={`/product/${product.id}`} className={s.productLink}>
+            <img
+              src={product.image}
+              alt={product.title}
+              className={s.productImage}
+              onClick={() => onProductClick?.(product)}
+            />
+          </Link>
 
           <button className={s.favoriteButton}>♥</button>
 
@@ -38,30 +41,48 @@ const ProductList: React.FC<ProductListProps> = ({
             <span className={s.availabilityText}>В наличии</span>
           </div>
 
-          <button className={s.compareButton}>SALE</button>
+          <button
+            className={s.compareButton}
+            onClick={() => addToBasket(product)}
+          >
+            SALE
+          </button>
 
           <button className={s.giftButton}>
             <span className={s.giftIcon}>🎁</span>В подарок
           </button>
 
           <div className={s.productInfo}>
-            <h3 className={s.productName}>{product.title}</h3>
+            <Link to={`/product/${product.id}`} className={s.productNameLink}>
+              <h3 className={s.productName}>{product.title}</h3>
+            </Link>
 
             <div className={s.reviewsBlock}>
               <div className={s.rating}>
-                <span className={s.stars}>★★★★★</span>
+                <span className={s.stars}>
+                  {"★".repeat(Math.round(product.rating?.rate || 5))}
+                </span>
+                <span className={s.stars_empty}>
+                  {"☆".repeat(5 - Math.round(product.rating?.rate || 5))}
+                </span>
               </div>
-              <span className={s.reviewsCount}>15 отзывов</span>
+              <span className={s.reviewsCount}>
+                {product.rating?.count || 0} отзывов
+              </span>
             </div>
 
             <div className={s.priceBlock}>
               <span className={s.currentPrice}>{product.price} ₽</span>
-              <span className={s.oldPrice}>
-                {Math.round(product.price * 1.2)} ₽
-              </span>
+              {product.discount ? (
+                <span className={s.oldPrice}>
+                  {Math.round(product.price * (1 + product.discount / 100))} ₽
+                </span>
+              ) : (
+                <span className={s.oldPrice}>
+                  {Math.round(product.price * 1.2)} ₽
+                </span>
+              )}
             </div>
-
-          
           </div>
         </div>
       ))}

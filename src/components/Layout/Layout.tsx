@@ -1,9 +1,9 @@
 import React, { useState } from "react";
-import Header from "../header/Header";
-import Footer from "../footer/Footer";
+import Header from "../Header/Header";
+import Footer from "../Footer/Footer";
 import { Link } from "react-router-dom";
 import s from "./Layout.module.css";
-import RequestCall from "../requestCall/RequestCall";
+import RequestCall from "../common/requestCall/RequestCall";
 interface LayoutProps {
   title?: string;
   children: React.ReactNode;
@@ -30,7 +30,7 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
       </nav>
 
       <main className="main-content">{children}</main>
-   
+
       <RequestCall />
       <Footer />
     </div>

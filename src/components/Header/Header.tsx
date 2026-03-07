@@ -1,11 +1,11 @@
 import { FaShoppingCart, FaHeart, FaPhone } from "react-icons/fa";
-import logo from "../../../../public/image/Logo.png";
+import logo from "../../../public/image/Logo.png";
 import s from "./Header.module.css";
 import { Link } from "react-router-dom";
 import { useState } from "react";
-import { IProductCard } from "../../catalog/product/ProductCard.type";
-import { BasketItem } from "../../../types/Basket.type";
-import Basket from "../basket/Basket";
+import { IProductCard } from "../catalog/product/ProductCard.type";
+import { BasketItem } from "../../types/Basket.type";
+import Basket from "../Basket/Basket";
 
 const Header = () => {
   const [isBasketOpen, setIsBasketOpen] = useState(false);
@@ -32,7 +32,7 @@ const Header = () => {
         name: product.title,
         price: product.price,
         quantity: 1,
-        image: product.image
+        image: product.image,
       };
       return [...prev, newItem];
     });
@@ -128,13 +128,14 @@ const Header = () => {
               className={s.icon_link}
             >
               <FaHeart size={20} />
-              {basketItems.reduce((sum, item) => sum + item.quantity, 0) > 0 && (
+              {basketItems.reduce((sum, item) => sum + item.quantity, 0) >
+                0 && (
                 <span className={s.cart_count}>
                   {basketItems.reduce((sum, item) => sum + item.quantity, 0)}
                 </span>
               )}
             </Link>
-            <button 
+            <button
               className={s.basket_button}
               onClick={openBasket}
               aria-label="Корзина"
@@ -150,6 +151,42 @@ const Header = () => {
         </div>
       </div>
       <div className={`${s.mobile_menu} ${isMenuOpen ? s.open : ""}`}>
+
+
+  <div className={s.mobile_icons}>
+            <Link
+              to="/favorites"
+              aria-label="Избранное"
+              className={s.icon_link}
+              onClick={closeMenu}
+            >
+              <FaHeart size={24} />
+              {basketItems.reduce((sum, item) => sum + item.quantity, 0) >
+                0 && (
+                <span className={s.cart_count}>
+                  {basketItems.reduce((sum, item) => sum + item.quantity, 0)}
+                </span>
+              )}
+            </Link>
+            <button
+              className={s.mobile_basket_button}
+              onClick={() => {
+                setIsBasketOpen(true);
+                closeMenu();
+              }}
+              aria-label="Корзина"
+            >
+              <FaShoppingCart size={24} />
+              {basketItems.length > 0 && (
+                <span className={s.cart_count}>
+                  {basketItems.reduce((sum, item) => sum + item.quantity, 0)}
+                </span>
+              )}
+            </button>
+          </div>
+
+
+
         <ul className={s.mobile_nav_list}>
           <li className={s.mobile_nav_item}>
             <Link to="/" className={s.mobile_nav_link} onClick={closeMenu}>
@@ -187,36 +224,7 @@ const Header = () => {
               +7 (966) 55 88 499
             </a>
           </div>
-          <div className={s.mobile_icons}>
-            <Link
-              to="/favorites"
-              aria-label="Избранное"
-              className={s.icon_link}
-              onClick={closeMenu}
-            >
-              <FaHeart size={24} />
-              {basketItems.reduce((sum, item) => sum + item.quantity, 0) > 0 && (
-                <span className={s.cart_count}>
-                  {basketItems.reduce((sum, item) => sum + item.quantity, 0)}
-                </span>
-              )}
-            </Link>
-            <button
-              className={s.mobile_basket_button}
-              onClick={() => {
-                setIsBasketOpen(true);
-                closeMenu();
-              }}
-              aria-label="Корзина"
-            >
-              <FaShoppingCart size={24} />
-              {basketItems.length > 0 && (
-                <span className={s.cart_count}>
-                  {basketItems.reduce((sum, item) => sum + item.quantity, 0)}
-                </span>
-              )}
-            </button>
-          </div>
+        
         </div>
       </div>
       <Basket
